@@ -1,0 +1,148 @@
+# Parkinson's Disease Feature-Centric Comparative Framework Configuration
+# All hyperparameters and settings are centralized here for reproducibility
+
+# =============================================================================
+# General Settings
+# =============================================================================
+general:
+  random_seed: 42
+  n_jobs: -1  # Use all available cores
+  verbose: true
+  log_level: INFO
+
+# =============================================================================
+# Data Settings
+# =============================================================================
+data:
+  raw_data_path: "data/raw/pd_speech_features.csv"
+  processed_data_path: "data/processed/"
+  target_column: "class"
+  id_columns: ["id"]
+  exclude_columns: ["id", "gender"]  # Non-feature columns
+
+# =============================================================================
+# Cross-Validation Settings
+# =============================================================================
+cross_validation:
+  n_folds: 5
+  stratified: true
+  shuffle: true
+
+# =============================================================================
+# Feature Selection Settings
+# =============================================================================
+feature_selection:
+  n_features_to_select: 30  # Top-k features
+  
+  # Classical Feature Selection (Random Forest)
+  classical:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 5
+    min_samples_leaf: 2
+  
+  # Quantum-Inspired Genetic Algorithm (QIGA)
+  quantum_inspired:
+    population_size: 20
+    n_generations: 50
+    mutation_rate: 0.1
+    crossover_rate: 0.8
+    theta_min: 0.01  # Minimum rotation angle
+    theta_max: 0.1   # Maximum rotation angle
+    elitism_count: 2  # Best individuals to preserve
+
+# =============================================================================
+# Model Hyperparameters
+# =============================================================================
+models:
+  # XGBoost Classifier
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 1
+    gamma: 0
+    reg_alpha: 0
+    reg_lambda: 1
+    objective: "binary:logistic"
+    eval_metric: "logloss"
+    use_label_encoder: false
+  
+  # Multi-Layer Perceptron
+  mlp:
+    hidden_layer_sizes: [64, 32]
+    activation: "relu"
+    solver: "adam"
+    alpha: 0.0001  # L2 regularization
+    batch_size: 32
+    learning_rate: "adaptive"
+    learning_rate_init: 0.001
+    max_iter: 500
+    early_stopping: true
+    validation_fraction: 0.1
+    n_iter_no_change: 20
+  
+  # Quantum Neural Network (Simulator)
+  qnn:
+    n_qubits: 4  # Will be adjusted based on features
+    n_layers: 3
+    learning_rate: 0.01
+    n_epochs: 100
+    batch_size: 16
+    optimizer: "adam"
+    shots: null  # Analytical mode (faster)
+
+# =============================================================================
+# Evaluation Settings
+# =============================================================================
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - roc_auc
+  
+  statistical_tests:
+    alpha: 0.05  # Significance level
+    paired_ttest: true
+  
+  feature_stability:
+    jaccard_similarity: true
+    overlap_threshold: 0.5
+
+# =============================================================================
+# Interpretability Settings
+# =============================================================================
+interpretability:
+  risk_thresholds:
+    low: 0.33
+    medium: 0.67
+    # high: >= 0.67 (implicit)
+  
+  output_labels:
+    low: "Low Risk"
+    medium: "Medium Risk"
+    high: "High Risk"
+  
+  disclaimer: |
+    These scores represent Parkinson's disease likelihood based on speech 
+    features and should NOT be interpreted as medical diagnosis.
+
+# =============================================================================
+# Output Settings
+# =============================================================================
+output:
+  results_dir: "results/"
+  metrics_dir: "results/metrics/"
+  figures_dir: "results/figures/"
+  features_dir: "results/selected_features/"
+  
+  save_models: false
+  save_predictions: true
+  generate_plots: true
+  
+  figure_format: "png"
+  figure_dpi: 150
