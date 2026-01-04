@@ -239,29 +239,13 @@ class QuantumNeuralNetwork:
     
     def _fit_quantum(self, X: np.ndarray, y: np.ndarray) -> None:
         """
-        Fit using PennyLane quantum circuit.
+        Fit using PennyLane quantum circuit with parameter-shift gradient.
         """
+        from autograd import numpy as anp
+        
         # Use PennyLane's numpy for autodiff
         weights = pnp.array(self.weights, requires_grad=True)
         opt = qml.GradientDescentOptimizer(stepsize=self.learning_rate)
-        
-        def cost_fn(weights: np.ndarray) -> float:
-            """Cost function for optimization."""
-            predictions = []
-            for i in range(len(X)):
-                # Normalize inputs to [-pi, pi]
-                inputs = np.tanh(X[i]) * np.pi
-                pred = self.circuit(inputs, weights)
-                predictions.append(pred)
-            
-            predictions = np.array(predictions)
-            # Map from [-1, 1] to [0, 1]
-            probs = (predictions + 1) / 2
-            
-            # Binary cross-entropy
-            eps = 1e-7
-            loss = -np.mean(y * np.log(probs + eps) + (1 - y) * np.log(1 - probs + eps))
-            return loss
         
         # Training loop with batching
         n_samples = len(X)
@@ -275,22 +259,31 @@ class QuantumNeuralNetwork:
                 X_batch = X[batch_idx]
                 y_batch = y[batch_idx]
                 
-                # Create batch cost function
+                # Create batch cost function using autograd numpy
                 def batch_cost(w):
                     preds = []
                     for i in range(len(X_batch)):
-                        inputs = np.tanh(X_batch[i]) * np.pi
+                        inputs = anp.tanh(X_batch[i]) * anp.pi
                         preds.append(self.circuit(inputs, w))
-                    preds = np.array(preds)
+                    preds = anp.array(preds)
                     probs = (preds + 1) / 2
                     eps = 1e-7
-                    return -np.mean(y_batch * np.log(probs + eps) + 
-                                   (1 - y_batch) * np.log(1 - probs + eps))
+                    # Use autograd numpy for log to support autodiff
+                    return -anp.mean(y_batch * anp.log(probs + eps) + 
+                                   (1 - y_batch) * anp.log(1 - probs + eps))
                 
                 weights = opt.step(batch_cost, weights)
             
             if epoch % 20 == 0:
-                loss = cost_fn(weights)
+                # Calculate loss for logging
+                preds = []
+                for i in range(len(X)):
+                    inputs = np.tanh(X[i]) * np.pi
+                    preds.append(float(self.circuit(inputs, weights)))
+                preds = np.array(preds)
+                probs = (preds + 1) / 2
+                eps = 1e-7
+                loss = -np.mean(y * np.log(probs + eps) + (1 - y) * np.log(1 - probs + eps))
                 logger.debug(f"Epoch {epoch}: loss = {loss:.4f}")
         
         self.weights = np.array(weights)
