@@ -172,7 +172,7 @@ def main() -> None:
             
             # Save report
             report_path = output_path / "sample_risk_report.txt"
-            with open(report_path, "w") as f:
+            with open(report_path, "w", encoding="utf-8") as f:
                 f.write(report)
             logger.info(f"Saved sample risk report to {report_path}")
         
