@@ -1,0 +1,5 @@
+,,accuracy,accuracy,precision,precision,recall,recall,f1,f1,roc_auc,roc_auc
+,,mean,std,mean,std,mean,std,mean,std,mean,std
+model,feature_method,,,,,,,,,,
+MLP,classical,0.791,0.0199,0.8205,0.039,0.9274,0.0564,0.8687,0.0108,0.6834,0.0839
+XGBoost,classical,0.877,0.0267,0.8892,0.0165,0.9538,0.0205,0.9204,0.0178,0.9346,0.0188
