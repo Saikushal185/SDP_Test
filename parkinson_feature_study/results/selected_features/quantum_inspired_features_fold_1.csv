@@ -1,0 +1,11 @@
+feature_index,feature_name
+93,mean_10th_delta_delta
+136,std_11th_delta_delta
+169,det_TKEO_mean_1_coef
+466,tqwt_TKEO_std_dec_3
+511,tqwt_medianValue_dec_12
+512,tqwt_medianValue_dec_13
+555,tqwt_meanValue_dec_20
+580,tqwt_stdValue_dec_9
+640,tqwt_minValue_dec_33
+664,tqwt_maxValue_dec_21
