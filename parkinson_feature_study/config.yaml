@@ -14,7 +14,7 @@ general:
 # Data Settings
 # =============================================================================
 data:
-  raw_data_path: "data/raw/pd_speech_features.csv"
+  raw_data_path: "data/raw/pd_speech_features_cleaned.csv"
   processed_data_path: "data/processed/"
   target_column: "class"
   id_columns: ["id"]
