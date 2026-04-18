@@ -1,0 +1,18 @@
+# Explainable AI Dashboard - Requirements
+
+# Flask and web framework
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Machine Learning - Using versions with pre-built wheels
+scikit-learn>=1.2.0
+xgboost>=2.0.0
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Explainability
+shap>=0.43.0
+
+# Optional: For quantum models (if needed)
+# qiskit==0.45.0
+# qiskit-machine-learning==0.7.0

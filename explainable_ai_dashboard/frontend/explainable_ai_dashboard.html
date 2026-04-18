@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explainable AI - Parkinson's Disease Diagnosis</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>Explainable AI - Parkinson's Disease Analysis</h1>
+                <div class="patient-selector">
+                    <label for="patientSelect">Patient ID:</label>
+                    <select id="patientSelect">
+                        <option value="0">Patient 0</option>
+                    </select>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="timestamp" id="timestamp"></span>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Primary Diagnosis Card -->
+                <div class="card diagnosis-card">
+                    <h2 class="card-title">Primary Diagnosis</h2>
+                    <div class="diagnosis-content">
+                        <div class="diagnosis-header">
+                            <h3 id="diagnosisCondition">Parkinson's Disease</h3>
+                            <span class="status-badge" id="statusBadge">Positive</span>
+                        </div>
+                        <div class="probability-display">
+                            <div class="prob-label">ParkinsonsDisease probability:</div>
+                            <div class="prob-value" id="probability">0.91</div>
+                        </div>
+                        <div class="affected-region">
+                            <div class="region-label">Primary affected region:</div>
+                            <div class="region-value" id="affectedRegion">Very, High</div>
+                        </div>
+                        <div class="decision-basis">
+                            <div class="basis-label">Decision basis:</div>
+                            <div class="basis-items" id="decisionBasis">
+                                <div class="basis-item">✓ Consistent motor speech degradation</div>
+                                <div class="basis-item">✓ High-frequency instability in phonation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Non-Motor Risk Estimation -->
+                <div class="card risk-estimation-card">
+                    <h2 class="card-title">Non-Motor Risk Estimation</h2>
+                    <div class="risk-cards-container">
+                        <!-- Cognitive Decline -->
+                        <div class="risk-card">
+                            <div class="risk-header">
+                                <h4>Cognitive Decline</h4>
+                                <span class="risk-score">Risk Score: <span id="cognitiveScore">0.62</span></span>
+                            </div>
+                            <div class="risk-detail">
+                                <div class="detail-item">
+                                    <span class="detail-icon">📍</span>
+                                    <span>Associated Bin:</span>
+                                    <strong id="cognitiveassociationBin">Basal Ganglia</strong>
+                                </div>
+                                <div class="indicators" id="cognitiveIndicators">
+                                    <div class="indicator-item">✓ Elevated jitter & shimmer values</div>
+                                    <div class="indicator-item">✓ Reduced pitch stability</div>
+                                    <div class="indicator-item">✓ Slowed articulation rate</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Depression -->
+                        <div class="risk-card">
+                            <div class="risk-header">
+                                <h4>Depression</h4>
+                                <span class="risk-score">Risk Score: <span id="depressionScore">0.78</span></span>
+                            </div>
+                            <div class="risk-detail">
+                                <div class="detail-item">
+                                    <span class="detail-icon">⚠️</span>
+                                    <span>Associated with:</span>
+                                    <strong id="depressionRisk">Ryk Satom 0.78</strong>
+                                </div>
+                                <div class="indicators" id="depressionIndicators">
+                                    <div class="indicator-item">✓ Monotonic pitch contour</div>
+                                    <div class="indicator-item">✓ Reduced speech energy</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dysphagia Risk -->
+                        <div class="risk-card">
+                            <div class="risk-header">
+                                <h4>Dysphagia risk</h4>
+                                <span class="risk-score">Risk Score: <span id="dysphagiaScore">0.68</span></span>
+                            </div>
+                            <div class="risk-detail">
+                                <div class="detail-item">
+                                    <span class="detail-icon">🎤</span>
+                                    <span>Speech Proxy:</span>
+                                    <strong id="speechProxy">✓</strong>
+                                </div>
+                                <div class="indicators" id="dysphagiaIndicators">
+                                    <div class="indicator-item">✓ Irregular phonation breaks</div>
+                                    <div class="indicator-item">✓ Altered speech timing</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Motor Speech Assessment -->
+                <div class="card motor-speech-card">
+                    <h2 class="card-title">Motor Speech Assessment</h2>
+                    <div class="motor-content">
+                        <div class="assessment-header">
+                            <div class="assessment-item">
+                                <span>Speech motor impairment:</span>
+                                <span class="badge badge-high" id="impairmentLevel">HIGH</span>
+                            </div>
+                            <div class="assessment-item">
+                                <span>Severity score:</span>
+                                <strong id="severityScore">0.82</strong>
+                            </div>
+                        </div>
+                        
+                        <div class="motor-details">
+                            <div class="detail-section">
+                                <h5>Speech Features:</h5>
+                                <div class="feature-list" id="speechFeatures">
+                                    <div class="feature-item">• Elevated jitter and shimmer values</div>
+                                    <div class="feature-item">• Reduced pitch stability</div>
+                                    <div class="feature-item">• Slowed articulation rate</div>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <h5>Voice instability:</h5>
+                                <div class="badge badge-medium" id="voiceInstability">MEDIUM</div>
+                                <div class="voice-features" id="voiceFeatures">
+                                    <div class="voice-item">
+                                        <span>Lovet_jitter:</span>
+                                        <span>↗</span>
+                                    </div>
+                                    <div class="voice-item">
+                                        <span>Moderate amplitude variation</span>
+                                    </div>
+                                    <div class="voice-item">
+                                        <span>Partial loss of harmonic structure</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="feature-groups">
+                                <div class="group">
+                                    <h6>🔵 Motor Features</h6>
+                                    <div class="group-items" id="motorFeatures">
+                                        <span>✓ Jitter</span>
+                                        <span>✓ Shimmer_Ratio</span>
+                                        <span>✓ Harmonics-to-noise ratio</span>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <h6>🟢 Prosodic Features</h6>
+                                    <div class="group-items" id="prosodicFeatures">
+                                        <span>✓ Pitch variability</span>
+                                        <span>✓ Speech rate</span>
+                                        <span>✓ Articulation pause ratio</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Model Performance & Explanation -->
+                <div class="card model-performance-card">
+                    <h2 class="card-title">Model Performance & Explanation</h2>
+                    
+                    <div class="models-section">
+                        <h3>Classical Models Contribution</h3>
+                        <div class="model-list">
+                            <div class="model-item">
+                                <div class="model-name">✓ SVM</div>
+                                <div class="model-badge badge-high">HIGH</div>
+                                <div class="model-name">✓ Random Forest</div>
+                                <div class="model-badge badge-medium">Medium</div>
+                            </div>
+                            <div class="model-item">
+                                <div class="model-name">✓ MLP</div>
+                                <div class="model-badge badge-high">HIGH</div>
+                                <div class="model-name">✓ QSVM</div>
+                                <div class="model-badge badge-high">HIGH</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="models-section">
+                        <h3>Quantum Models Contribution</h3>
+                        <div class="quantum-models">
+                            <div class="quantum-item">
+                                <span class="quantum-icon">⚛️</span>
+                                <div class="quantum-details">
+                                    <div class="quantum-name">SHAP</div>
+                                    <div class="quantum-type">Permutation Importance</div>
+                                </div>
+                                <div class="quantum-badges">
+                                    <span class="importance-badge">● ● ●</span>
+                                    <span class="badge badge-high">HIGH</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quantum-visuals">
+                        <h4>Quantum Models</h4>
+                        <div class="quantum-boxes">
+                            <div class="quantum-box">
+                                <div class="box-header">SVM</div>
+                                <div class="box-range">Medium to HIGH</div>
+                                <div class="box-details">
+                                    <div>• High-classification accuracy</div>
+                                    <div>• Stable decision boundary</div>
+                                </div>
+                            </div>
+                            <div class="quantum-box">
+                                <div class="box-header">QuantumSVM</div>
+                                <div class="box-range">M</div>
+                                <div class="box-details">
+                                    <div>• Improved feature separability</div>
+                                    <div>• Strongerm posopores</div>
+                                    <div>• Zkuzhure forest analysis</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overall Risk Assessment -->
+                <div class="card risk-assessment-card">
+                    <h2 class="card-title">Overall Risk Assessment</h2>
+                    <div class="risk-gauge-container">
+                        <div class="gauge-wrapper">
+                            <svg class="severity-gauge" viewBox="0 0 200 120" id="severityGauge">
+                                <!-- Gauge background arc -->
+                                <path d="M 20 100 A 80 80 0 0 1 180 100" 
+                                      fill="none" 
+                                      stroke="#e0e0e0" 
+                                      stroke-width="20" 
+                                      stroke-linecap="round"/>
+                                <!-- Green section -->
+                                <path d="M 20 100 A 80 80 0 0 1 100 20" 
+                                      fill="none" 
+                                      stroke="#4CAF50" 
+                                      stroke-width="20" 
+                                      stroke-linecap="round"/>
+                                <!-- Yellow section -->
+                                <path d="M 100 20 A 80 80 0 0 1 150 35" 
+                                      fill="none" 
+                                      stroke="#FFB300" 
+                                      stroke-width="20" 
+                                      stroke-linecap="round"/>
+                                <!-- Red section -->
+                                <path d="M 150 35 A 80 80 0 0 1 180 100" 
+                                      fill="none" 
+                                      stroke="#F44336" 
+                                      stroke-width="20" 
+                                      stroke-linecap="round"/>
+                                <!-- Needle -->
+                                <line id="gaugeNeedle" x1="100" y1="100" x2="100" y2="30" 
+                                      stroke="#333" 
+                                      stroke-width="3" 
+                                      stroke-linecap="round"/>
+                                <!-- Center circle -->
+                                <circle cx="100" cy="100" r="5" fill="#333"/>
+                                <!-- Labels -->
+                                <text x="30" y="115" font-size="10" fill="#666">Late</text>
+                                <text x="90" y="15" font-size="10" fill="#666" text-anchor="middle">Sanbe</text>
+                                <text x="170" y="115" font-size="10" fill="#666" text-anchor="end">M/G</text>
+                            </svg>
+                        </div>
+                        <div class="gauge-values">
+                            <div class="gauge-item">
+                                <span>Severity Index:</span>
+                                <strong id="severityIndex">0.84</strong>
+                            </div>
+                            <div class="gauge-item">
+                                <span>Disease Stage:</span>
+                                <strong id="diseaseStage">Early to Mid</strong>
+                            </div>
+                            <div class="gauge-item">
+                                <span>Progression Risk:</span>
+                                <strong id="progressionRisk">Elevated</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="card recommendations-card">
+                    <h2 class="card-title">Recommendations</h2>
+                    <div class="recommendations-list" id="recommendationsList">
+                        <div class="recommendation-item">• Neurological evaluation</div>
+                        <div class="recommendation-item">• Speech therapy assessment</div>
+                        <div class="recommendation-item">• Cognitive screening</div>
+                        <div class="recommendation-item">• Periodic speech monitoring</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

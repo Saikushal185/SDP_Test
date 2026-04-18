@@ -1,0 +1,672 @@
+/* 
+ * Explainable AI Dashboard - Premium Stylesheet
+ * Medical-grade design with modern aesthetics
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Color Palette - Medical Grade */
+    --primary-blue: #3B82F6;
+    --primary-blue-dark: #2563EB;
+    --success-green: #10B981;
+    --warning-yellow: #F59E0B;
+    --danger-red: #EF4444;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --bg-primary: #F9FAFB;
+    --bg-card: #FFFFFF;
+    --border-color: #E5E7EB;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Header */
+.dashboard-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-left h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.patient-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.patient-selector label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+#patientSelect {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: white;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#patientSelect:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.timestamp {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Main Grid */
+.dashboard-container {
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+}
+
+.left-column,
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Card Styling */
+.card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--bg-primary);
+}
+
+/* Primary Diagnosis Card */
+.diagnosis-card {
+    background: linear-gradient(135deg, #DBEAFE 0%, #FFFFFF 100%);
+}
+
+.diagnosis-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.diagnosis-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.status-badge {
+    padding: 0.375rem 0.875rem;
+    background: var(--success-green);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.probability-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+}
+
+.prob-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.prob-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.affected-region,
+.decision-basis {
+    margin-top: 1rem;
+}
+
+.region-label,
+.basis-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.region-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.basis-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.basis-item {
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border-left: 3px solid var(--success-green);
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+/* Risk Estimation Cards */
+.risk-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.risk-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: all 0.2s;
+}
+
+.risk-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.risk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.risk-header h4 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.risk-score {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.risk-score span {
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.detail-icon {
+    font-size: 1.125rem;
+}
+
+.indicators {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin-top: 0.75rem;
+}
+
+.indicator-item {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    padding-left: 0.5rem;
+}
+
+/* Motor Speech Assessment */
+.motor-speech-card {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FFFFFF 100%);
+}
+
+.assessment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+}
+
+.assessment-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.assessment-item span:first-child {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-high {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.badge-medium {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+.badge-low {
+    background: #D1FAE5;
+    color: #059669;
+}
+
+.motor-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.detail-section h5 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.feature-item {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border-radius: 6px;
+}
+
+.voice-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.voice-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border-radius: 6px;
+}
+
+.feature-groups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.group {
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-blue);
+}
+
+.group h6 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.group-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.group-items span {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+/* Model Performance Card */
+.models-section {
+    margin-bottom: 1.5rem;
+}
+
+.models-section h3 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.model-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.model-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.model-name {
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.model-badge {
+    margin-left: auto;
+}
+
+.quantum-models {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.quantum-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--glass-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.quantum-icon {
+    font-size: 1.5rem;
+}
+
+.quantum-details {
+    flex: 1;
+}
+
+.quantum-name {
+    font-weight: 600;
+    font-size: 0.9375rem;
+}
+
+.quantum-type {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+.quantum-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.importance-badge {
+    color: var(--warning-yellow);
+    font-size: 1.125rem;
+}
+
+.quantum-visuals {
+    margin-top: 1.5rem;
+}
+
+.quantum-visuals h4 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.quantum-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.quantum-box {
+    padding: 1rem;
+    background: linear-gradient(135deg, #F3E8FF 0%, #FFFFFF 100%);
+    border-radius: 8px;
+    border: 1px solid #E9D5FF;
+}
+
+.box-header {
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.box-range {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.box-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Risk Assessment Card */
+.risk-gauge-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.gauge-wrapper {
+    flex-shrink: 0;
+}
+
+.severity-gauge {
+    width: 200px;
+    height: 120px;
+}
+
+.gauge-values {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.gauge-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: var(--bg-primary);
+    border-radius: 8px;
+}
+
+.gauge-item span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.gauge-item strong {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Recommendations Card */
+.recommendations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.recommendation-item {
+    padding: 1rem;
+    background: linear-gradient(135deg, #DBEAFE 0%, #FFFFFF 100%);
+    border-left: 3px solid var(--primary-blue);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.recommendation-item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quantum-boxes {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .main-grid {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .model-list,
+    .feature-groups {
+        grid-template-columns: 1fr;
+    }
+    
+    .risk-gauge-container {
+        flex-direction: column;
+    }
+}
+
+/* Loading State */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid var(--primary-blue);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
