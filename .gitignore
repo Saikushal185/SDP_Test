@@ -1,0 +1,8 @@
+.pytest_cache/
+__pycache__/
+*.pyc
+
+parkinson_feature_study/.python_packages/
+parkinson_feature_study/.venv/
+parkinson_feature_study/artifacts/
+parkinson_feature_study/data/external/
