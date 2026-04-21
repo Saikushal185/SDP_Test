@@ -24,9 +24,19 @@ data:
 # Cross-Validation Settings
 # =============================================================================
 cross_validation:
-  n_folds: 5
+  n_folds: 10
   stratified: true
   shuffle: true
+
+# =============================================================================
+# Quantum Settings
+# =============================================================================
+quantum:
+  max_qubits: 4
+  variance_threshold: 0.90
+  vqc_maxiter: 3
+  qsvm_num_steps: 64
+  max_train_samples: 32
 
 # =============================================================================
 # Feature Selection Settings
@@ -139,6 +149,8 @@ output:
   metrics_dir: "results/metrics/"
   figures_dir: "results/figures/"
   features_dir: "results/selected_features/"
+  artifact_root: "artifacts"
+  external_data_dir: "data/external"
   
   save_models: false
   save_predictions: true
