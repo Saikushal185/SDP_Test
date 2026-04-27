@@ -1,0 +1,122 @@
+[
+  {
+    "name": "std_delta_delta_log_energy",
+    "importance": 0.09671499431065227
+  },
+  {
+    "name": "std_delta_log_energy",
+    "importance": 0.07032199573407805
+  },
+  {
+    "name": "tqwt_entropy_log_dec_27",
+    "importance": 0.045039648911775323
+  },
+  {
+    "name": "tqwt_entropy_log_dec_33",
+    "importance": 0.044515825043842085
+  },
+  {
+    "name": "std_7th_delta_delta",
+    "importance": 0.043419072881393767
+  },
+  {
+    "name": "tqwt_entropy_shannon_dec_12",
+    "importance": 0.04334385684321025
+  },
+  {
+    "name": "std_6th_delta_delta",
+    "importance": 0.03922638741601025
+  },
+  {
+    "name": "tqwt_energy_dec_27",
+    "importance": 0.03880734370114338
+  },
+  {
+    "name": "app_LT_TKEO_std_7_coef",
+    "importance": 0.038026939167730395
+  },
+  {
+    "name": "tqwt_entropy_log_dec_12",
+    "importance": 0.03772027718557012
+  },
+  {
+    "name": "tqwt_entropy_shannon_dec_6",
+    "importance": 0.03658637209245084
+  },
+  {
+    "name": "tqwt_TKEO_mean_dec_12",
+    "importance": 0.03501789357740361
+  },
+  {
+    "name": "tqwt_energy_dec_12",
+    "importance": 0.031431232107770476
+  },
+  {
+    "name": "tqwt_TKEO_std_dec_12",
+    "importance": 0.03012136707055693
+  },
+  {
+    "name": "tqwt_energy_dec_11",
+    "importance": 0.0297826384348323
+  },
+  {
+    "name": "tqwt_stdValue_dec_13",
+    "importance": 0.028751449924525233
+  },
+  {
+    "name": "tqwt_energy_dec_26",
+    "importance": 0.02855015297881926
+  },
+  {
+    "name": "ppq5Jitter",
+    "importance": 0.028367741821752505
+  },
+  {
+    "name": "tqwt_stdValue_dec_12",
+    "importance": 0.025352496982946636
+  },
+  {
+    "name": "tqwt_TKEO_std_dec_11",
+    "importance": 0.023843526766043167
+  },
+  {
+    "name": "std_Log_energy",
+    "importance": 0.023403007506246618
+  },
+  {
+    "name": "tqwt_minValue_dec_13",
+    "importance": 0.022949426177020435
+  },
+  {
+    "name": "tqwt_TKEO_std_dec_13",
+    "importance": 0.02213397051081099
+  },
+  {
+    "name": "tqwt_entropy_log_dec_11",
+    "importance": 0.02132624598463033
+  },
+  {
+    "name": "tqwt_entropy_shannon_dec_11",
+    "importance": 0.02125265352672988
+  },
+  {
+    "name": "tqwt_stdValue_dec_26",
+    "importance": 0.02055363385049835
+  },
+  {
+    "name": "tqwt_maxValue_dec_13",
+    "importance": 0.019998493515978055
+  },
+  {
+    "name": "tqwt_maxValue_dec_11",
+    "importance": 0.019481686491955447
+  },
+  {
+    "name": "tqwt_maxValue_dec_12",
+    "importance": 0.017639520037085004
+  },
+  {
+    "name": "tqwt_minValue_dec_11",
+    "importance": 0.01632014944653801
+  }
+]
