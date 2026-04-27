@@ -1,0 +1,18 @@
+[
+  {
+    "key": "xgboost",
+    "display_name": "XGBoost Voice Classifier",
+    "dataset_id": "pd_speech_features.csv",
+    "enabled": true,
+    "artifact_path": "models/xgboost.pkl",
+    "description": "Gradient-boosted tree model trained only on the PD speech feature dataset."
+  },
+  {
+    "key": "random_forest",
+    "display_name": "Random Forest Voice Baseline",
+    "dataset_id": "pd_speech_features.csv",
+    "enabled": true,
+    "artifact_path": "models/random_forest.pkl",
+    "description": "Tree ensemble baseline trained on the same PD speech feature dataset."
+  }
+]
