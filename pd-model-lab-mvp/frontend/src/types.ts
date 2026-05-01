@@ -80,5 +80,19 @@ export type PredictionRow = {
   source: string;
   model_key: string;
   probability: number;
+  confidence: number;
   predicted_label: string;
+  explanation?: {
+    method: string;
+    output_scale?: string;
+    base_value?: number | null;
+    groups: GroupedExplanation[];
+  };
+};
+
+export type GroupedExplanation = {
+  name: string;
+  value: number;
+  absValue: number;
+  featureCount: number;
 };
