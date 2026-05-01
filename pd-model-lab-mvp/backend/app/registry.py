@@ -3,7 +3,9 @@ from __future__ import annotations
 import io
 import json
 import math
+import re
 import sys
+import warnings
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -99,6 +101,25 @@ def _resolve_path(value: Any) -> Path | None:
 
 def _positive_label(probability: float) -> str:
     return "Parkinson's (PD)" if probability >= 0.5 else "Healthy Control"
+
+
+FEATURE_GROUP_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("Voice instability", re.compile(r"(jitter|shimmer|harmonicity|noise|pulses|period|ppe|rpde|dfa|gq|gne)", re.I)),
+    ("Energy variation", re.compile(r"(energy|intensity|tkeo|vfer|imf|log_energy)", re.I)),
+    ("Frequency pattern shifts", re.compile(r"(mfcc|delta|formant|^f[1-4]$|^b[1-4]$|freq)", re.I)),
+    (
+        "Wave-pattern complexity",
+        re.compile(r"(tqwt|entropy|maxvalue|minvalue|stdvalue|meanvalue|medianvalue|kurtosis|skewness)", re.I),
+    ),
+)
+PREDICTION_METADATA_COLUMNS = {"id", "class", "target"}
+
+
+def _friendly_feature_group(feature_name: str) -> str:
+    for group_name, pattern in FEATURE_GROUP_PATTERNS:
+        if pattern.search(feature_name):
+            return group_name
+    return "Other signal changes"
 
 
 class ArtifactRegistry:
@@ -200,8 +221,9 @@ class ArtifactRegistry:
         feature_names = list(self.feature_names(dataset_id))
         expected = set(feature_names)
         actual = set(frame.columns.astype(str))
+        ignored_metadata = {column for column in actual if column.lower() in PREDICTION_METADATA_COLUMNS}
         missing = sorted(expected - actual)
-        extra = sorted(actual - expected)
+        extra = sorted(actual - expected - ignored_metadata)
         if missing or extra:
             parts = []
             if missing:
@@ -220,16 +242,231 @@ class ArtifactRegistry:
         probabilities = self._predict_probabilities(model, validated)
         rows = []
         for index, probability in enumerate(probabilities):
+            probability_value = float(probability)
+            row = {
+                "row_index": int(index),
+                "source": source,
+                "model_key": model_key,
+                "probability": probability_value,
+                "confidence": float(max(probability_value, 1.0 - probability_value)),
+                "predicted_label": _positive_label(probability_value),
+            }
+            if index == 0:
+                row["explanation"] = self.grouped_explanation(
+                    model_key,
+                    validated.iloc[[index]],
+                    target_probability=probability_value,
+                )
+            rows.append(row)
+        return rows
+
+    def grouped_explanation(
+        self,
+        model_key: str,
+        frame: pd.DataFrame,
+        target_probability: float | None = None,
+    ) -> dict[str, Any]:
+        try:
+            values, base_value = self._native_shap_values(model_key, frame)
+            return self._group_explanation_values(model_key, values, "native", base_value, target_probability)
+        except Exception:
+            values, base_value = self._kernel_grouped_shap_values(model_key, frame)
+            return self._group_values_from_groups(model_key, values, "kernel-grouped", base_value, target_probability)
+
+    def _native_shap_values(self, model_key: str, frame: pd.DataFrame) -> tuple[np.ndarray, float | None]:
+        import shap
+
+        model = self.load_model(model_key)
+        estimator, prepared = self._prepared_estimator_frame(model, frame)
+
+        if hasattr(estimator, "feature_importances_"):
+            _, background = self._prepared_estimator_frame(model, self._background_frame(model_key))
+            explainer = shap.TreeExplainer(estimator, data=background, model_output="probability")
+            raw_values = explainer.shap_values(prepared)
+            values = self._extract_positive_class_values(raw_values)[0]
+            base_value = self._extract_positive_class_base_value(getattr(explainer, "expected_value", None))
+            return values, base_value
+
+        if hasattr(estimator, "coef_"):
+            raise ValueError("Native linear SHAP explains raw margins, so grouped Kernel SHAP is used for probabilities")
+
+        raise ValueError("Estimator type is not supported by the native SHAP path")
+
+    def _kernel_grouped_shap_values(self, model_key: str, frame: pd.DataFrame) -> tuple[dict[str, float], float | None]:
+        import shap
+
+        record = self.get_model(model_key)
+        model = self.load_model(model_key)
+        feature_names = list(self.feature_names(record.dataset_id))
+        grouped_features = self._group_feature_names(feature_names)
+        group_names = list(grouped_features.keys())
+        baseline = self._background_frame(model_key).iloc[0].copy()
+        sample = frame.loc[:, feature_names].iloc[0].copy()
+
+        def predict_masks(mask_matrix: np.ndarray) -> np.ndarray:
+            masks = np.asarray(mask_matrix, dtype=float)
+            if masks.ndim == 1:
+                masks = masks.reshape(1, -1)
+
+            rows = []
+            for mask in masks:
+                candidate = baseline.copy()
+                for group_index, group_name in enumerate(group_names):
+                    if mask[group_index] >= 0.5:
+                        candidate.loc[grouped_features[group_name]] = sample.loc[grouped_features[group_name]]
+                rows.append(candidate)
+
+            candidates = pd.DataFrame(rows, columns=feature_names)
+            return self._predict_probabilities(model, candidates)
+
+        background_mask = np.zeros((1, len(group_names)), dtype=float)
+        sample_mask = np.ones((1, len(group_names)), dtype=float)
+        explainer = shap.KernelExplainer(predict_masks, background_mask, link="identity")
+        nsamples = 2 ** len(group_names)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            raw_values = explainer.shap_values(sample_mask, nsamples=nsamples, silent=True)
+
+        values = np.asarray(raw_values, dtype=float)
+        if values.ndim == 2:
+            values = values[0]
+        if values.ndim != 1 or values.shape[0] != len(group_names):
+            raise ValueError(f"Unsupported grouped Kernel SHAP output shape: {values.shape}")
+
+        grouped = {group_name: float(values[index]) for index, group_name in enumerate(group_names)}
+        base_value = self._extract_positive_class_base_value(getattr(explainer, "expected_value", None))
+        return grouped, base_value
+
+    def _prepared_estimator_frame(self, model: Any, frame: pd.DataFrame) -> tuple[Any, pd.DataFrame]:
+        if not hasattr(model, "named_steps") or "model" not in model.named_steps:
+            return model, frame
+
+        prepared: Any = frame.copy()
+        for step_name, step in model.named_steps.items():
+            if step_name == "model":
+                return step, self._as_feature_frame(prepared, frame.columns)
+            prepared = step.transform(prepared)
+        return model, frame
+
+    def _as_feature_frame(self, values: Any, columns: pd.Index) -> pd.DataFrame:
+        if isinstance(values, pd.DataFrame):
+            return values
+        array = np.asarray(values, dtype=float)
+        if array.ndim == 1:
+            array = array.reshape(1, -1)
+        if array.shape[1] == len(columns):
+            return pd.DataFrame(array, columns=list(columns))
+        return pd.DataFrame(array)
+
+    def _group_explanation_values(
+        self,
+        model_key: str,
+        values: np.ndarray,
+        method: str,
+        base_value: float | None,
+        target_probability: float | None = None,
+    ) -> dict[str, Any]:
+        record = self.get_model(model_key)
+        feature_names = list(self.feature_names(record.dataset_id))
+        if len(values) != len(feature_names):
+            raise ValueError("SHAP output length does not match feature schema")
+
+        grouped: dict[str, float] = {}
+        for feature_name, value in zip(feature_names, values):
+            group_name = _friendly_feature_group(feature_name)
+            grouped[group_name] = grouped.get(group_name, 0.0) + float(value)
+        return self._group_values_from_groups(model_key, grouped, method, base_value, target_probability)
+
+    def _group_values_from_groups(
+        self,
+        model_key: str,
+        values: dict[str, float],
+        method: str,
+        base_value: float | None,
+        target_probability: float | None = None,
+    ) -> dict[str, Any]:
+        record = self.get_model(model_key)
+        grouped_features = self._group_feature_names(list(self.feature_names(record.dataset_id)))
+        rows = []
+        for group_name, feature_names in grouped_features.items():
+            value = float(values.get(group_name, 0.0))
+            if not np.isfinite(value):
+                value = 0.0
             rows.append(
                 {
-                    "row_index": int(index),
-                    "source": source,
-                    "model_key": model_key,
-                    "probability": float(probability),
-                    "predicted_label": _positive_label(float(probability)),
+                    "name": group_name,
+                    "value": value,
+                    "absValue": abs(value),
+                    "featureCount": len(feature_names),
                 }
             )
-        return rows
+        clean_base_value = base_value if base_value is None or np.isfinite(base_value) else None
+        if clean_base_value is not None and target_probability is not None and np.isfinite(target_probability):
+            explained_probability = clean_base_value + sum(row["value"] for row in rows)
+            residual = float(target_probability) - float(explained_probability)
+            if np.isfinite(residual):
+                clean_base_value = float(clean_base_value + residual)
+
+        rows.sort(key=lambda row: row["absValue"], reverse=True)
+        return {
+            "method": method,
+            "output_scale": "probability",
+            "base_value": clean_base_value,
+            "groups": rows,
+        }
+
+    def _group_feature_names(self, feature_names: list[str]) -> dict[str, list[str]]:
+        grouped = {
+            "Voice instability": [],
+            "Energy variation": [],
+            "Frequency pattern shifts": [],
+            "Wave-pattern complexity": [],
+            "Other signal changes": [],
+        }
+        for feature_name in feature_names:
+            grouped[_friendly_feature_group(feature_name)].append(feature_name)
+        return {group_name: names for group_name, names in grouped.items() if names}
+
+    def _background_frame(self, model_key: str) -> pd.DataFrame:
+        record = self.get_model(model_key)
+        feature_names = list(self.feature_names(record.dataset_id))
+        frame = pd.read_csv(self.cleaned_features_path(record.dataset_id), usecols=feature_names, nrows=40)
+        validated = self.validate_prediction_frame(record.dataset_id, frame)
+        baseline = validated.median(axis=0, numeric_only=True).reindex(feature_names).fillna(0.0)
+        return pd.DataFrame([baseline], columns=feature_names)
+
+    def _extract_positive_class_values(self, shap_values: Any) -> np.ndarray:
+        if isinstance(shap_values, list):
+            if len(shap_values) < 2:
+                raise ValueError("Expected binary classification SHAP values for two classes")
+            return np.asarray(shap_values[1], dtype=float)
+
+        values = np.asarray(shap_values, dtype=float)
+        if values.ndim == 1:
+            return values.reshape(1, -1)
+        if values.ndim == 2:
+            return values
+        if values.ndim == 3:
+            if values.shape[-1] == 2:
+                return values[:, :, 1]
+            if values.shape[0] == 2:
+                return values[1]
+        raise ValueError(f"Unsupported SHAP output shape: {values.shape}")
+
+    def _extract_positive_class_base_value(self, expected_value: Any) -> float | None:
+        if expected_value is None:
+            return None
+        if isinstance(expected_value, list):
+            if len(expected_value) < 2:
+                return float(expected_value[0])
+            return float(expected_value[1])
+
+        values = np.asarray(expected_value, dtype=float)
+        if values.ndim == 0:
+            return float(values)
+        if values.shape[0] == 2:
+            return float(values[1])
+        return float(values.reshape(-1)[0])
 
     @lru_cache(maxsize=32)
     def load_model(self, model_key: str) -> Any:
