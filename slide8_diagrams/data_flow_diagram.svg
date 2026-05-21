@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#238B9A"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#0B2334" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .bg { fill: #F7FBFD; }
+      .title { font: 700 42px Inter, Arial, sans-serif; fill: #102A43; }
+      .subtitle { font: 400 21px Inter, Arial, sans-serif; fill: #486581; }
+      .section { font: 700 22px Inter, Arial, sans-serif; fill: #102A43; }
+      .label { font: 700 18px Inter, Arial, sans-serif; fill: #17324D; text-anchor: middle; dominant-baseline: middle; }
+      .small { font: 500 15px Inter, Arial, sans-serif; fill: #486581; text-anchor: middle; }
+      .note { font: 500 18px Inter, Arial, sans-serif; fill: #486581; }
+      .lane { stroke: #C0DDE8; stroke-width: 2; rx: 18; }
+      .card { fill: #FFFFFF; stroke: #B8D9E6; stroke-width: 2; rx: 12; filter: url(#shadow); }
+      .data { fill: #FFF7ED; stroke: #F1B86B; stroke-width: 2; rx: 12; filter: url(#shadow); }
+      .arrow { stroke: #238B9A; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+  <text x="58" y="82" class="title">Data Flow Diagram</text>
+  <text x="60" y="124" class="subtitle">How data moves through preprocessing, feature selection, training, saved artifacts, and website prediction.</text>
+  <rect x="58" y="154" width="1484" height="3" fill="#CDE9EF"/>
+
+  <rect x="60" y="190" width="1480" height="170" class="lane" fill="#EEF9FB"/>
+  <text x="84" y="226" class="section">1. Offline Data Preparation</text>
+
+  <rect x="105" y="255" width="210" height="70" class="data"/>
+  <text x="210" y="282" class="label"><tspan x="210">pd_speech_features.csv</tspan><tspan x="210" dy="22">source dataset</tspan></text>
+
+  <rect x="395" y="255" width="210" height="70" class="card"/>
+  <text x="500" y="282" class="label"><tspan x="500">Preprocess</tspan><tspan x="500" dy="22">clean numeric features</tspan></text>
+
+  <rect x="685" y="255" width="210" height="70" class="card"/>
+  <text x="790" y="282" class="label"><tspan x="790">Mutual Information</tspan><tspan x="790" dy="22">feature ranking</tspan></text>
+
+  <rect x="975" y="255" width="210" height="70" class="data"/>
+  <text x="1080" y="282" class="label"><tspan x="1080">Top-10 Feature</tspan><tspan x="1080" dy="22">training data</tspan></text>
+
+  <line x1="315" y1="290" x2="395" y2="290" class="arrow"/>
+  <line x1="605" y1="290" x2="685" y2="290" class="arrow"/>
+  <line x1="895" y1="290" x2="975" y2="290" class="arrow"/>
+
+  <rect x="60" y="405" width="1480" height="170" class="lane" fill="#F6FBF2"/>
+  <text x="84" y="441" class="section">2. Model Training and Stored Outputs</text>
+
+  <rect x="105" y="470" width="210" height="70" class="card"/>
+  <text x="210" y="497" class="label"><tspan x="210">Train Models</tspan><tspan x="210" dy="22">SVM, LR, XGBoost</tspan></text>
+
+  <rect x="395" y="470" width="210" height="70" class="card"/>
+  <text x="500" y="497" class="label"><tspan x="500">Train Quantum</tspan><tspan x="500" dy="22">QSVM, VQC</tspan></text>
+
+  <rect x="685" y="470" width="210" height="70" class="card"/>
+  <text x="790" y="497" class="label"><tspan x="790">10-Fold CV</tspan><tspan x="790" dy="22">evaluate models</tspan></text>
+
+  <rect x="975" y="470" width="210" height="70" class="data"/>
+  <text x="1080" y="497" class="label"><tspan x="1080">Model Artifacts</tspan><tspan x="1080" dy="22">.joblib / JSON</tspan></text>
+
+  <rect x="1265" y="470" width="210" height="70" class="data"/>
+  <text x="1370" y="497" class="label"><tspan x="1370">Result Reports</tspan><tspan x="1370" dy="22">metrics + confusion</tspan></text>
+
+  <line x1="210" y1="325" x2="210" y2="470" class="arrow"/>
+  <line x1="1080" y1="325" x2="210" y2="470" class="arrow"/>
+  <line x1="1080" y1="325" x2="500" y2="470" class="arrow"/>
+  <line x1="315" y1="505" x2="395" y2="505" class="arrow"/>
+  <line x1="605" y1="505" x2="685" y2="505" class="arrow"/>
+  <line x1="895" y1="505" x2="975" y2="505" class="arrow"/>
+  <line x1="1185" y1="505" x2="1265" y2="505" class="arrow"/>
+
+  <rect x="60" y="620" width="1480" height="170" class="lane" fill="#F2F7FF"/>
+  <text x="84" y="656" class="section">3. Website Prediction Flow</text>
+
+  <rect x="105" y="685" width="210" height="70" class="card"/>
+  <text x="210" y="712" class="label"><tspan x="210">Manual User Input</tspan><tspan x="210" dy="22">10 feature values</tspan></text>
+
+  <rect x="395" y="685" width="210" height="70" class="card"/>
+  <text x="500" y="712" class="label"><tspan x="500">Validate Input</tspan><tspan x="500" dy="22">schema check</tspan></text>
+
+  <rect x="685" y="685" width="210" height="70" class="card"/>
+  <text x="790" y="712" class="label"><tspan x="790">Prediction API</tspan><tspan x="790" dy="22">selected model</tspan></text>
+
+  <rect x="975" y="685" width="210" height="70" class="data"/>
+  <text x="1080" y="712" class="label"><tspan x="1080">Prediction Result</tspan><tspan x="1080" dy="22">Healthy / Parkinson's</tspan></text>
+
+  <rect x="1265" y="685" width="210" height="70" class="data"/>
+  <text x="1370" y="712" class="label"><tspan x="1370">Model Insights</tspan><tspan x="1370" dy="22">charts + metrics</tspan></text>
+
+  <line x1="315" y1="720" x2="395" y2="720" class="arrow"/>
+  <line x1="605" y1="720" x2="685" y2="720" class="arrow"/>
+  <line x1="895" y1="720" x2="975" y2="720" class="arrow"/>
+  <line x1="1185" y1="720" x2="1265" y2="720" class="arrow"/>
+  <line x1="1080" y1="540" x2="790" y2="685" class="arrow"/>
+  <line x1="1370" y1="540" x2="1370" y2="685" class="arrow"/>
+
+  <text x="80" y="845" class="note">Data stores are shown in orange. Processing steps are shown in white. The website loads saved artifacts; it does not retrain models.</text>
+</svg>

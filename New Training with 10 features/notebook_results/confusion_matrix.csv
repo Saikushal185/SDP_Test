@@ -1,0 +1,9 @@
+model_name,actual_label,predicted_label,count
+LogisticRegression,0,0,143
+LogisticRegression,0,1,49
+LogisticRegression,1,0,154
+LogisticRegression,1,1,410
+SVM,0,0,141
+SVM,0,1,51
+SVM,1,0,82
+SVM,1,1,482

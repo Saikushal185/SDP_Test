@@ -1,0 +1,11 @@
+position,feature_name
+0,tqwt_entropy_log_dec_35
+1,std_delta_delta_log_energy
+2,std_8th_delta_delta
+3,mean_MFCC_2nd_coef
+4,tqwt_TKEO_mean_dec_16
+5,tqwt_entropy_shannon_dec_35
+6,tqwt_TKEO_std_dec_12
+7,tqwt_maxValue_dec_12
+8,tqwt_entropy_log_dec_11
+9,tqwt_TKEO_mean_dec_12

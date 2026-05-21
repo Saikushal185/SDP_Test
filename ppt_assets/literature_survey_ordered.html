@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Literature Survey</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        width: 1600px;
+        height: 900px;
+        background: #f8f5ef;
+        color: #222;
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .slide {
+        width: 1600px;
+        height: 900px;
+        padding: 28px 46px 22px;
+        position: relative;
+      }
+
+      .header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        margin: 0;
+        color: #1f4e79;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 36px;
+        font-weight: 800;
+        text-decoration: underline;
+        text-underline-offset: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        background: #f8f5ef;
+        border: 2px solid #b98267;
+      }
+
+      th,
+      td {
+        border: 2px solid #b98267;
+        padding: 10px 8px;
+        vertical-align: middle;
+        line-height: 1.16;
+        font-size: 17px;
+      }
+
+      th {
+        background: #eee2d8;
+        text-align: left;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      td:first-child,
+      th:first-child,
+      td:nth-child(3),
+      th:nth-child(3) {
+        text-align: center;
+      }
+
+      .paper {
+        font-size: 16px;
+      }
+
+      .paper strong {
+        display: block;
+        margin-bottom: 4px;
+        font-weight: 800;
+      }
+
+      .footer {
+        position: absolute;
+        left: 46px;
+        bottom: 20px;
+        color: #555;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+      }
+
+      col.sno {
+        width: 5%;
+      }
+
+      col.title {
+        width: 26%;
+      }
+
+      col.year {
+        width: 5%;
+      }
+
+      col.pub {
+        width: 14%;
+      }
+
+      col.method {
+        width: 21%;
+      }
+
+      col.adv {
+        width: 14%;
+      }
+
+      col.disadv {
+        width: 15%;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="slide">
+      <div class="header">
+        <h1>Literature Survey</h1>
+      </div>
+
+      <table>
+        <colgroup>
+          <col class="sno" />
+          <col class="title" />
+          <col class="year" />
+          <col class="pub" />
+          <col class="method" />
+          <col class="adv" />
+          <col class="disadv" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Paper Title</th>
+            <th>Year</th>
+            <th>Published In</th>
+            <th>Proposed Methodology</th>
+            <th>Advantage</th>
+            <th>Disadvantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="paper">
+              <strong>Speech biomarkers of Parkinson's disease: Advances and open challenges</strong>
+              Author: Vasquez-Correa et al.
+            </td>
+            <td>2024</td>
+            <td>Biomedical Signal Processing and Control</td>
+            <td>Reviewed speech biomarkers such as jitter, shimmer, HNR, DFA, RPDE, and PPE for Parkinson's disease analysis.</td>
+            <td>Clearly explains important speech biomarkers linked with motor dysfunction.</td>
+            <td>Mainly a review study; does not provide a complete implementation model.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="paper">
+              <strong>Remote speech analysis for monitoring Parkinson's disease progression</strong>
+              Author: Tsanas et al.
+            </td>
+            <td>2024</td>
+            <td>IEEE Reviews in Biomedical Engineering</td>
+            <td>Used remote speech analysis and sustained phonation tasks to monitor Parkinson's disease progression.</td>
+            <td>Supports non-invasive and remote monitoring through speech signals.</td>
+            <td>Performance depends on recording quality and controlled speaking conditions.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="paper">
+              <strong>Speech-based biomarkers for early Parkinson's disease detection: Advances in acoustic analysis and machine learning</strong>
+              Author: Xu et al.
+            </td>
+            <td>2025</td>
+            <td>IEEE Transactions on Neural Systems and Rehabilitation Engineering</td>
+            <td>Applied acoustic feature extraction with ML models such as SVM, Random Forest, and boosting methods.</td>
+            <td>Achieved strong performance using acoustic biomarkers for early detection.</td>
+            <td>Model reliability depends on dataset size, feature quality, and generalization.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="paper">
+              <strong>Transformer-based speech representation learning for Parkinson's disease detection</strong>
+              Author: SedighMalekroodi et al.
+            </td>
+            <td>2025</td>
+            <td>Computer Speech &amp; Language</td>
+            <td>Used transformer-based speech representation learning for Parkinson's disease classification.</td>
+            <td>Learns complex temporal and spectral speech patterns automatically.</td>
+            <td>Requires large datasets and high computational resources.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td class="paper">
+              <strong>Quantum machine learning for clinical decision support systems: Opportunities and limitations</strong>
+              Author: Chow
+            </td>
+            <td>2025</td>
+            <td>Nature Digital Medicine</td>
+            <td>Reviewed quantum machine learning for clinical decision support systems.</td>
+            <td>Highlights future potential of QML in healthcare applications.</td>
+            <td>Current quantum systems have qubit limitations and noise-related issues.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="footer">Speech-Based Parkinson Disease Analysis | Literature Survey</div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PD Speech Workflow</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        width: 2250px;
+        height: 500px;
+        background: #ffffff;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #1f2933;
+      }
+
+      svg {
+        width: 2250px;
+        height: 500px;
+        display: block;
+      }
+
+      text {
+        font-size: 18px;
+        font-weight: 600;
+        fill: #1f2933;
+      }
+
+      .small {
+        font-size: 16px;
+      }
+
+      .box {
+        fill: #f5fbfa;
+        stroke: #087c7c;
+        stroke-width: 4;
+      }
+
+      .model {
+        fill: #f7f8ff;
+        stroke: #4d63b6;
+        stroke-width: 4;
+      }
+
+      .result {
+        fill: #fffaf3;
+        stroke: #b26a16;
+        stroke-width: 4;
+      }
+
+      .final {
+        fill: #f1fbf5;
+        stroke: #2f735c;
+        stroke-width: 4;
+      }
+
+      .line {
+        stroke: #6d7175;
+        stroke-width: 4;
+        fill: none;
+      }
+
+      .arrow {
+        fill: #6d7175;
+      }
+    </style>
+  </head>
+  <body>
+    <svg viewBox="0 70 2250 500" role="img" aria-label="PD speech workflow">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L8,4 L0,8 Z" class="arrow" />
+        </marker>
+      </defs>
+
+      <rect class="box" x="40" y="268" width="150" height="80" rx="34" />
+      <text x="115" y="301" text-anchor="middle">Start: Voice /</text>
+      <text x="115" y="325" text-anchor="middle">speech sample</text>
+
+      <line class="line" x1="190" y1="308" x2="250" y2="308" marker-end="url(#arrow)" />
+
+      <rect class="box" x="250" y="255" width="160" height="106" rx="6" />
+      <text x="330" y="296" text-anchor="middle">Extract or enter</text>
+      <text x="330" y="320" text-anchor="middle">top-10 speech</text>
+      <text x="330" y="344" text-anchor="middle">features</text>
+
+      <line class="line" x1="410" y1="308" x2="480" y2="308" marker-end="url(#arrow)" />
+
+      <rect class="box" x="480" y="255" width="160" height="106" rx="6" />
+      <text x="560" y="296" text-anchor="middle">Select model</text>
+      <text x="560" y="320" text-anchor="middle">from website</text>
+
+      <line class="line" x1="640" y1="308" x2="715" y2="308" marker-end="url(#arrow)" />
+
+      <path class="model" d="M780 230 L845 308 L780 386 L715 308 Z" />
+      <text x="780" y="314" text-anchor="middle">Model type</text>
+
+      <path class="line" d="M845 308 H910 V150 H965" marker-end="url(#arrow)" />
+      <path class="line" d="M845 308 H965" marker-end="url(#arrow)" />
+      <path class="line" d="M845 308 H910 V466 H965" marker-end="url(#arrow)" />
+
+      <rect class="model" x="965" y="110" width="180" height="96" rx="6" />
+      <text x="1055" y="149" text-anchor="middle">Swarm AI model:</text>
+      <text x="1055" y="174" text-anchor="middle">PSO-SVM</text>
+
+      <rect class="model" x="965" y="260" width="180" height="96" rx="6" />
+      <text x="1055" y="296" text-anchor="middle">Hybrid quantum:</text>
+      <text x="1055" y="321" text-anchor="middle">QSVM, VQC</text>
+
+      <rect class="model" x="965" y="410" width="180" height="96" rx="6" />
+      <text x="1055" y="446" text-anchor="middle">Classical models:</text>
+      <text x="1055" y="471" text-anchor="middle">SVM, XGBoost</text>
+
+      <path class="line" d="M1145 158 H1190 V308 H1225" marker-end="url(#arrow)" />
+      <path class="line" d="M1145 308 H1225" marker-end="url(#arrow)" />
+      <path class="line" d="M1145 458 H1190 V308 H1225" marker-end="url(#arrow)" />
+
+      <rect class="model" x="1225" y="255" width="170" height="106" rx="6" />
+      <text x="1310" y="315" text-anchor="middle">Run prediction</text>
+
+      <line class="line" x1="1395" y1="308" x2="1465" y2="308" marker-end="url(#arrow)" />
+
+      <rect class="result" x="1465" y="252" width="190" height="112" rx="6" />
+      <text x="1560" y="291" text-anchor="middle">Show PD probability,</text>
+      <text x="1560" y="316" text-anchor="middle">confidence, and</text>
+      <text x="1560" y="341" text-anchor="middle">label</text>
+
+      <path class="line" d="M1655 308 H1705 V210 H1738" marker-end="url(#arrow)" />
+      <path class="line" d="M1655 308 H1705 V405 H1738" marker-end="url(#arrow)" />
+
+      <rect class="result" x="1740" y="170" width="210" height="90" rx="6" />
+      <text x="1845" y="204" text-anchor="middle">Model insights:</text>
+      <text x="1845" y="229" text-anchor="middle">confusion matrix</text>
+      <text x="1845" y="254" text-anchor="middle">and metrics</text>
+
+      <rect class="result" x="1740" y="360" width="210" height="90" rx="6" />
+      <text x="1845" y="396" text-anchor="middle">Explainability:</text>
+      <text x="1845" y="421" text-anchor="middle">grouped SHAP</text>
+      <text x="1845" y="446" text-anchor="middle">color chart</text>
+
+      <path class="line" d="M1950 215 C1985 215 1985 308 2020 308" marker-end="url(#arrow)" />
+      <path class="line" d="M1950 405 C1985 405 1985 308 2020 308" marker-end="url(#arrow)" />
+
+      <rect class="final" x="2020" y="265" width="170" height="86" rx="36" />
+      <text x="2105" y="297" text-anchor="middle">Final result:</text>
+      <text x="2105" y="322" text-anchor="middle">prediction plus</text>
+      <text x="2105" y="347" text-anchor="middle">reasoning</text>
+    </svg>
+  </body>
+</html>

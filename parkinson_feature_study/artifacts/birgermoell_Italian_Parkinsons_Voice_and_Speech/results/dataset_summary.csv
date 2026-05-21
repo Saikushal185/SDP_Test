@@ -1,0 +1,2 @@
+dataset_id,dataset_source,source_type,n_samples,n_features,class_0_count,class_1_count,requested_cv_folds,effective_cv_folds,best_classical_model,best_quantum_model,website_candidate_model
+birgermoell_Italian_Parkinsons_Voice_and_Speech,birgermoell/Italian_Parkinsons_Voice_and_Speech,huggingface_audio,68,88,41,27,10,10,RandomForest,VQC,RandomForest

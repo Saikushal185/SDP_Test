@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#238B9A"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#0B2334" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .bg { fill: #F7FBFD; }
+      .title { font: 700 42px Inter, Arial, sans-serif; fill: #102A43; }
+      .subtitle { font: 400 21px Inter, Arial, sans-serif; fill: #486581; }
+      .lane-title { font: 700 23px Inter, Arial, sans-serif; fill: #102A43; }
+      .card-text { font: 700 17px Inter, Arial, sans-serif; fill: #17324D; text-anchor: middle; dominant-baseline: middle; }
+      .note { font: 500 18px Inter, Arial, sans-serif; fill: #486581; }
+      .lane { stroke: #C0DDE8; stroke-width: 2; rx: 18; }
+      .card { fill: #FFFFFF; stroke: #B8D9E6; stroke-width: 2; rx: 12; filter: url(#shadow); }
+      .arrow { stroke: #238B9A; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+  <text x="58" y="82" class="title">Model Workflow</text>
+  <text x="60" y="124" class="subtitle">Fold-safe training flow and final artifact creation for the top-10 feature experiment.</text>
+  <rect x="58" y="154" width="1484" height="3" fill="#CDE9EF"/>
+
+  <rect x="70" y="200" width="1460" height="260" class="lane" fill="#EEF9FB"/>
+  <text x="94" y="235" class="lane-title">A. Fold-Safe 10-Fold Cross Validation</text>
+
+  <rect x="95" y="305" width="175" height="75" class="card"/>
+  <rect x="95" y="305" width="7" height="75" rx="12" fill="#2878A8"/>
+  <text x="182" y="331" class="card-text"><tspan x="182">Cleaned Dataset</tspan><tspan x="182" dy="22">753 features + class</tspan></text>
+
+  <rect x="320" y="305" width="175" height="75" class="card"/>
+  <rect x="320" y="305" width="7" height="75" rx="12" fill="#1D8A99"/>
+  <text x="407" y="331" class="card-text"><tspan x="407">Stratified</tspan><tspan x="407" dy="22">10 Folds</tspan></text>
+
+  <rect x="545" y="305" width="175" height="75" class="card"/>
+  <rect x="545" y="305" width="7" height="75" rx="12" fill="#6A7FDB"/>
+  <text x="632" y="331" class="card-text"><tspan x="632">Training Split</tspan><tspan x="632" dy="22">Only</tspan></text>
+
+  <rect x="770" y="305" width="175" height="75" class="card"/>
+  <rect x="770" y="305" width="7" height="75" rx="12" fill="#C7792B"/>
+  <text x="857" y="331" class="card-text"><tspan x="857">MI Ranking +</tspan><tspan x="857" dy="22">Top 10 Selection</tspan></text>
+
+  <rect x="995" y="305" width="175" height="75" class="card"/>
+  <rect x="995" y="305" width="7" height="75" rx="12" fill="#2F855A"/>
+  <text x="1082" y="331" class="card-text"><tspan x="1082">Train Five</tspan><tspan x="1082" dy="22">Models</tspan></text>
+
+  <rect x="1220" y="305" width="175" height="75" class="card"/>
+  <rect x="1220" y="305" width="7" height="75" rx="12" fill="#2878A8"/>
+  <text x="1307" y="331" class="card-text"><tspan x="1307">Held-Out</tspan><tspan x="1307" dy="22">Test Fold</tspan></text>
+
+  <rect x="1220" y="395" width="175" height="45" class="card"/>
+  <rect x="1220" y="395" width="7" height="45" rx="12" fill="#2F855A"/>
+  <text x="1307" y="417" class="card-text">Fold Metrics</text>
+
+  <line x1="270" y1="342" x2="320" y2="342" class="arrow"/>
+  <line x1="495" y1="342" x2="545" y2="342" class="arrow"/>
+  <line x1="720" y1="342" x2="770" y2="342" class="arrow"/>
+  <line x1="945" y1="342" x2="995" y2="342" class="arrow"/>
+  <line x1="1170" y1="342" x2="1220" y2="342" class="arrow"/>
+  <line x1="1307" y1="380" x2="1307" y2="395" class="arrow"/>
+
+  <text x="120" y="430" class="note">Inside each fold, Mutual Information is fitted only on the training split.</text>
+
+  <rect x="70" y="545" width="1460" height="225" class="lane" fill="#F2F7FF"/>
+  <text x="94" y="580" class="lane-title">B. Final Top-10 Experiment Artifacts</text>
+
+  <rect x="135" y="630" width="205" height="75" class="card"/>
+  <rect x="135" y="630" width="7" height="75" rx="12" fill="#6A7FDB"/>
+  <text x="237" y="656" class="card-text"><tspan x="237">Full Dataset</tspan><tspan x="237" dy="22">MI Ranking</tspan></text>
+
+  <rect x="405" y="630" width="205" height="75" class="card"/>
+  <rect x="405" y="630" width="7" height="75" rx="12" fill="#C7792B"/>
+  <text x="507" y="656" class="card-text"><tspan x="507">Final Top 10</tspan><tspan x="507" dy="22">Feature List</tspan></text>
+
+  <rect x="675" y="630" width="205" height="75" class="card"/>
+  <rect x="675" y="630" width="7" height="75" rx="12" fill="#2F855A"/>
+  <text x="777" y="656" class="card-text"><tspan x="777">Fit Final</tspan><tspan x="777" dy="22">Top-10 Models</tspan></text>
+
+  <rect x="945" y="630" width="205" height="75" class="card"/>
+  <rect x="945" y="630" width="7" height="75" rx="12" fill="#2878A8"/>
+  <text x="1047" y="656" class="card-text"><tspan x="1047">Save Artifacts</tspan><tspan x="1047" dy="22">models + reports</tspan></text>
+
+  <rect x="1215" y="630" width="205" height="75" class="card"/>
+  <rect x="1215" y="630" width="7" height="75" rx="12" fill="#6A7FDB"/>
+  <text x="1317" y="656" class="card-text"><tspan x="1317">Website Uses</tspan><tspan x="1317" dy="22">Saved Artifacts</tspan></text>
+
+  <line x1="340" y1="667" x2="405" y2="667" class="arrow"/>
+  <line x1="610" y1="667" x2="675" y2="667" class="arrow"/>
+  <line x1="880" y1="667" x2="945" y2="667" class="arrow"/>
+  <line x1="1150" y1="667" x2="1215" y2="667" class="arrow"/>
+
+  <text x="120" y="815" class="note">The final top-10 feature list is used for reporting and for the website input form.</text>
+</svg>

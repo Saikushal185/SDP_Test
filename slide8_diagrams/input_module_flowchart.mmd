@@ -1,0 +1,7 @@
+flowchart TD
+    A["Parkinson's Speech Dataset"] --> B["Import Dataset"]
+    B --> C["Check Data Format"]
+    C --> D["Identify Non-Numeric or Corrupted Values"]
+    D --> E["Convert Invalid Entries into Missing Values"]
+    E --> F["Apply Median Imputation"]
+    F --> G["Prepared Dataset for Preprocessing"]

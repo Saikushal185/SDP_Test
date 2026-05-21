@@ -1,0 +1,16 @@
+Run backend:
+
+cd "C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\New Training with 10 features\website"
+$env:PYTHONPATH="C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\parkinson_feature_study\.python_packages;C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\parkinson_feature_study;C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\New Training with 10 features\website\backend"
+python -m uvicorn app.main:app --app-dir .\backend --host 127.0.0.1 --port 8010
+
+Run frontend in another PowerShell window:
+
+cd "C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\New Training with 10 features\website\frontend"
+$env:VITE_API_URL="http://127.0.0.1:8010"
+npm install
+npm run dev -- --host 127.0.0.1 --port 5174
+
+Open:
+
+http://127.0.0.1:5174

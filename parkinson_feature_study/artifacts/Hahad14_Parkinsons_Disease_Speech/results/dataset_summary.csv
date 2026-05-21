@@ -1,0 +1,2 @@
+dataset_id,dataset_source,source_type,n_samples,n_features,class_0_count,class_1_count,requested_cv_folds,effective_cv_folds,best_classical_model,best_quantum_model,website_candidate_model
+Hahad14_Parkinsons_Disease_Speech,Hahad14/Parkinsons_Disease_Speech,huggingface_audio,74,88,42,32,10,10,XGBoost,VQC,XGBoost

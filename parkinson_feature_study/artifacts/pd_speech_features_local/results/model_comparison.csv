@@ -1,0 +1,8 @@
+model_name,model_family,mean_accuracy,mean_recall,mean_f1,mean_roc_auc,mean_fit_sample_count,fit_strategy,cv_folds,inference_ready,dataset_id,dataset_source,fit_sample_count
+XGBoost,classical,0.9153157894736841,0.982236842105263,0.9454522014104972,0.9604352987732488,680.4,full_dataset,10,True,pd_speech_features_local,pd_speech_features.csv,756
+RandomForest,classical,0.888842105263158,0.982236842105263,0.9296931858772105,0.9536621982588048,680.4,full_dataset,10,True,pd_speech_features_local,pd_speech_features.csv,756
+KNN,classical,0.8690350877192982,0.9750939849624061,0.917490831144973,0.9311122790528954,680.4,full_dataset,10,True,pd_speech_features_local,pd_speech_features.csv,756
+SVM,classical,0.8544035087719297,0.9858082706766916,0.9100837363493935,0.8868018731038122,680.4,full_dataset,10,True,pd_speech_features_local,pd_speech_features.csv,756
+LogisticRegression,classical,0.8306842105263158,0.8919172932330826,0.8869247191432464,0.8729990271731962,680.4,full_dataset,10,True,pd_speech_features_local,pd_speech_features.csv,756
+QSVM,quantum,0.7460350877192983,1.0,0.85453884537854,0.3778620069911621,32.0,stratified_subsample,10,True,pd_speech_features_local,pd_speech_features.csv,32
+VQC,quantum,0.5040175438596491,0.5018483709273183,0.5966399767041167,0.509529910302071,32.0,stratified_subsample,10,False,pd_speech_features_local,pd_speech_features.csv,32

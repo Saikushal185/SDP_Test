@@ -1,0 +1,8 @@
+model_name,model_family,mean_accuracy,mean_recall,mean_f1,mean_roc_auc,mean_fit_sample_count,fit_strategy,cv_folds,inference_ready,dataset_id,dataset_source,fit_sample_count
+XGBoost,classical,0.9848484848484848,0.975,0.9836363636363636,1.0,297.0,full_dataset,10,True,kongkon123890_uci_parkinsons_voice,XANJEEV/Parkinson_Classification_Dataset,330
+RandomForest,classical,0.9606060606060606,0.9455882352941177,0.959820032118419,0.9935661764705882,297.0,full_dataset,10,True,kongkon123890_uci_parkinsons_voice,XANJEEV/Parkinson_Classification_Dataset,330
+SVM,classical,0.9424242424242424,0.9091911764705882,0.9400670605485596,0.9889705882352942,297.0,full_dataset,10,True,kongkon123890_uci_parkinsons_voice,XANJEEV/Parkinson_Classification_Dataset,330
+KNN,classical,0.9242424242424242,0.8966911764705883,0.9218004386505335,0.975,297.0,full_dataset,10,True,kongkon123890_uci_parkinsons_voice,XANJEEV/Parkinson_Classification_Dataset,330
+LogisticRegression,classical,0.8969696969696971,0.9033088235294118,0.8982933597734357,0.9727941176470587,297.0,full_dataset,10,True,kongkon123890_uci_parkinsons_voice,XANJEEV/Parkinson_Classification_Dataset,330
+QSVM,quantum,0.5363636363636364,0.8985294117647058,0.6582318468983519,0.3599264705882353,32.0,stratified_subsample,10,True,kongkon123890_uci_parkinsons_voice,XANJEEV/Parkinson_Classification_Dataset,32
+VQC,quantum,0.5484848484848485,0.48382352941176465,0.5146667816444693,0.5829044117647058,32.0,stratified_subsample,10,False,kongkon123890_uci_parkinsons_voice,XANJEEV/Parkinson_Classification_Dataset,32

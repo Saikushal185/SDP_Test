@@ -1,0 +1,10 @@
+flowchart TD
+    A["Input Speech-Based Features"] --> B["Preprocess Input Data"]
+    B --> C["Apply Feature Scaling"]
+    C --> D["Pass Data to Trained Models"]
+    D --> E["Classical ML Models"]
+    D --> F["Quantum ML Models"]
+    E --> G["Generate Prediction"]
+    F --> G
+    G --> H["Calculate Probability Score"]
+    H --> I["Output: Parkinson's / Non-Parkinson's Prediction"]

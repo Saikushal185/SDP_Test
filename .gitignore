@@ -157,3 +157,17 @@ parkinson_feature_study/artifacts/
 parkinson_feature_study/data/external/
 .deps/
 .runtime_deps/
+
+# --- Exceptions to allow saved models and results ---
+!New Training with 10 features/**/*.joblib
+!New Training with 10 features/**/*.json
+!New Training with 10 features/**/*.csv
+!New Training with 10 features/**/*.docx
+!New Training with 10 features/**/*.pdf
+
+!parkinson_feature_study/artifacts/
+!parkinson_feature_study/artifacts/**/*.joblib
+!parkinson_feature_study/artifacts/**/*.json
+!parkinson_feature_study/artifacts/**/*.csv
+!parkinson_feature_study/artifacts/**/*.md
+

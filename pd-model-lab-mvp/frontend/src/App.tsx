@@ -1,34 +1,19 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
   BarChart3,
   CheckCircle2,
   ChevronRight,
-  Download,
-  Gauge,
+  Home,
   Info,
   Lightbulb,
   Loader2,
-  Play,
   RefreshCw,
-  Search,
   Sparkles,
   UploadCloud,
   Users,
   Waves,
 } from "lucide-react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import {
   fetchDashboard,
   fetchFeatureImportance,
@@ -45,27 +30,23 @@ import type {
   PredictionRow,
   SamplePayload,
 } from "./types";
-import { ExplainabilityPanel } from "./ExplainabilityPanel";
+import { AboutPage } from "./pages/AboutPage";
+import { ExplainabilityPage } from "./pages/ExplainabilityPage";
+import { HomePage } from "./pages/HomePage";
+import { InputPage } from "./pages/InputPage";
+import { ModelInsightsPage } from "./pages/ModelInsightsPage";
+import { PredictionPage } from "./pages/PredictionPage";
 
-const navItems = [
-  { id: "dashboard", label: "Dashboard", icon: Gauge },
-  { id: "predict", label: "Predict", icon: Activity },
+export type PageId = "home" | "input" | "prediction" | "explainability" | "model-insights" | "about";
+
+const navItems: Array<{ id: PageId; label: string; icon: typeof Home }> = [
+  { id: "home", label: "Home", icon: Home },
+  { id: "input", label: "Input", icon: UploadCloud },
+  { id: "prediction", label: "Prediction", icon: Activity },
   { id: "explainability", label: "Explainability", icon: Lightbulb },
-  { id: "feature-importance", label: "Feature Importance", icon: BarChart3 },
-  { id: "group-impact", label: "Group Impact", icon: Users },
+  { id: "model-insights", label: "Model Insights", icon: BarChart3 },
+  { id: "about", label: "About", icon: Users },
 ];
-
-function formatMetric(value?: number | null, digits = 3) {
-  return typeof value === "number" ? value.toFixed(digits) : "--";
-}
-
-function formatPercent(value?: number | null) {
-  return typeof value === "number" ? `${Math.round(value * 100)}%` : "--";
-}
-
-function shortFeatureName(value: string) {
-  return value.length > 24 ? `${value.slice(0, 21)}...` : value;
-}
 
 function statusLabel(status?: string) {
   if (status === "repaired") return "Repaired / Inference-Ready";
@@ -76,6 +57,7 @@ function statusLabel(status?: string) {
 export default function App() {
   const [models, setModels] = useState<ModelInfo[]>([]);
   const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
+  const [activePage, setActivePage] = useState<PageId>("home");
   const [selectedKey, setSelectedKey] = useState("");
   const [samples, setSamples] = useState<SamplePayload | null>(null);
   const [sampleIndex, setSampleIndex] = useState(0);
@@ -89,14 +71,6 @@ export default function App() {
   const [isPredicting, setIsPredicting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const sections = {
-    dashboard: useRef<HTMLElement>(null),
-    predict: useRef<HTMLElement>(null),
-    explainability: useRef<HTMLElement>(null),
-    "feature-importance": useRef<HTMLElement>(null),
-    "group-impact": useRef<HTMLElement>(null),
-  };
 
   useEffect(() => {
     async function loadInitialData() {
@@ -205,6 +179,7 @@ export default function App() {
         file: uploadedFile,
       });
       setRecentPredictions((existing) => [...predictions, ...existing].slice(0, 8));
+      setActivePage("prediction");
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Prediction failed");
     } finally {
@@ -212,8 +187,74 @@ export default function App() {
     }
   }
 
-  function scrollTo(id: keyof typeof sections) {
-    sections[id].current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  function renderPage() {
+    const latestPrediction = displayedPredictions[0] ?? null;
+
+    switch (activePage) {
+      case "home":
+        return (
+          <HomePage
+            dashboard={dashboard}
+            models={models}
+            selectedModel={selectedModel}
+            latestPrediction={latestPrediction}
+            onNavigate={setActivePage}
+          />
+        );
+      case "input":
+        return (
+          <InputPage
+            uploadedFile={uploadedFile}
+            setUploadedFile={setUploadedFile}
+            sampleIndex={sampleIndex}
+            setSampleIndex={setSampleIndex}
+            samples={samples}
+            featureSearch={featureSearch}
+            setFeatureSearch={setFeatureSearch}
+            editableFeatureNames={editableFeatureNames}
+            currentSample={currentSample}
+            edits={edits}
+            setEdits={setEdits}
+            isPredicting={isPredicting}
+            selectedModel={selectedModel}
+            onPredict={handlePredict}
+          />
+        );
+      case "prediction":
+        return (
+          <PredictionPage
+            latestPrediction={latestPrediction}
+            predictions={displayedPredictions}
+            selectedModel={selectedModel}
+            onNavigate={setActivePage}
+          />
+        );
+      case "explainability":
+        return (
+          <ExplainabilityPage
+            prediction={explainedPrediction}
+            selectedModel={selectedModel}
+            features={features}
+            onNavigate={setActivePage}
+          />
+        );
+      case "model-insights":
+        return (
+          <ModelInsightsPage
+            selectedModel={selectedModel}
+            performanceRows={performanceRows}
+            featureCount={samples?.feature_names.length ?? null}
+            groupChartData={groupChartData}
+            threshold={threshold}
+            setThreshold={setThreshold}
+            thresholdRows={thresholdRows}
+          />
+        );
+      case "about":
+        return <AboutPage modelCount={models.length} datasetCount={dashboard?.datasets.length ?? 0} />;
+      default:
+        return null;
+    }
   }
 
   if (loading) {
@@ -240,7 +281,11 @@ export default function App() {
 
         <nav className="nav-list">
           {navItems.map((item) => (
-            <button key={item.id} onClick={() => scrollTo(item.id as keyof typeof sections)}>
+            <button
+              key={item.id}
+              className={activePage === item.id ? "active" : undefined}
+              onClick={() => setActivePage(item.id)}
+            >
               <item.icon size={19} />
               <span>{item.label}</span>
             </button>
@@ -280,211 +325,7 @@ export default function App() {
 
         {error && <div className="error-banner">{error}</div>}
 
-        <section ref={sections.predict} className="panel prediction-panel" id="predict">
-          <WorkflowStep number="1" title="Upload CSV">
-            <label className="dropzone">
-              <UploadCloud size={30} />
-              <strong>{uploadedFile ? uploadedFile.name : "Drag & drop CSV file here"}</strong>
-              <span>{uploadedFile ? `${Math.ceil(uploadedFile.size / 1024)} KB selected` : "Browse Files"}</span>
-              <input
-                type="file"
-                accept=".csv,text/csv"
-                onChange={(event) => setUploadedFile(event.target.files?.[0] ?? null)}
-              />
-            </label>
-            {uploadedFile && (
-              <button className="link-button" onClick={() => setUploadedFile(null)}>
-                Use sample row instead
-              </button>
-            )}
-          </WorkflowStep>
-
-          <WorkflowStep number="2" title="Sample Row">
-            <div className="row-tools">
-              <label>
-                Row
-                <select value={sampleIndex} onChange={(event) => setSampleIndex(Number(event.target.value))}>
-                  {samples?.rows.map((row, index) => (
-                    <option key={row.row_index} value={index}>
-                      {row.row_index + 1}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="feature-search">
-                <Search size={14} />
-                <input
-                  value={featureSearch}
-                  placeholder="Search features"
-                  onChange={(event) => setFeatureSearch(event.target.value)}
-                />
-              </label>
-            </div>
-            <div className="feature-editor">
-              {editableFeatureNames.map((feature) => (
-                <label key={feature}>
-                  <span>{feature}</span>
-                  <input
-                    type="number"
-                    value={String(edits[feature] ?? currentSample?.features[feature] ?? "")}
-                    onChange={(event) =>
-                      setEdits((existing) => ({
-                        ...existing,
-                        [feature]: event.target.value === "" ? null : Number(event.target.value),
-                      }))
-                    }
-                  />
-                </label>
-              ))}
-            </div>
-          </WorkflowStep>
-
-          <WorkflowStep number="3" title="Predict">
-            <p className="muted">Run prediction on the uploaded CSV or selected edited sample row.</p>
-            <div className="predict-actions">
-              <button className="primary-button" onClick={handlePredict} disabled={isPredicting || !selectedModel}>
-                {isPredicting ? <Loader2 className="spin" size={17} /> : <Play size={17} />}
-                Run Prediction
-              </button>
-              <button
-                className="secondary-button"
-                onClick={() => {
-                  setUploadedFile(null);
-                  setEdits({});
-                }}
-              >
-                Clear
-              </button>
-            </div>
-            <div className="model-note">
-              <CheckCircle2 size={16} />
-              <span>{selectedModel?.model_key ?? "No model selected"}</span>
-            </div>
-          </WorkflowStep>
-        </section>
-
-        <ExplainabilityPanel
-          refProp={sections.explainability}
-          prediction={explainedPrediction}
-          selectedModel={selectedModel}
-        />
-
-        <section ref={sections.dashboard} className="panel" id="dashboard">
-          <div className="section-heading">
-            <div>
-              <h2>Model Performance</h2>
-              <p>Cross-validation metrics from saved dataset artifacts.</p>
-            </div>
-            <div className="dataset-chip">{selectedModel?.dataset_id}</div>
-          </div>
-          <PerformanceTable rows={performanceRows} />
-        </section>
-
-        <div className="analysis-grid">
-          <section ref={sections["feature-importance"]} className="panel chart-panel" id="feature-importance">
-            <div className="section-heading compact">
-              <div>
-                <h2>Feature Importance</h2>
-                <p>Top drivers for the selected model.</p>
-              </div>
-            </div>
-            <ResponsiveContainer width="100%" height={205}>
-              <BarChart data={features} layout="vertical" margin={{ left: 18, right: 24 }}>
-                <CartesianGrid stroke="#e8edf1" horizontal={false} />
-                <XAxis type="number" tick={{ fontSize: 11 }} />
-                <YAxis
-                  dataKey="feature"
-                  type="category"
-                  width={155}
-                  tick={{ fontSize: 11 }}
-                  tickFormatter={shortFeatureName}
-                />
-                <Tooltip formatter={(value: number) => value.toFixed(4)} />
-                <Bar dataKey="importance" fill="#139a9a" radius={[0, 4, 4, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </section>
-
-          <section ref={sections["group-impact"]} className="panel chart-panel wide" id="group-impact">
-            <div className="section-heading compact">
-              <div>
-                <h2>Group / Class Impact</h2>
-                <p>Positive-rate shifts across decision thresholds.</p>
-              </div>
-              <label className="threshold-control">
-                Threshold {threshold.toFixed(2)}
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.05"
-                  value={threshold}
-                  onChange={(event) => setThreshold(Number(event.target.value))}
-                />
-              </label>
-            </div>
-            <div className="impact-layout">
-              <ResponsiveContainer width="100%" height={205}>
-                <LineChart data={groupChartData}>
-                  <CartesianGrid stroke="#e8edf1" />
-                  <XAxis dataKey="threshold" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} domain={[0, 1]} />
-                  <Tooltip formatter={(value: number) => value.toFixed(3)} />
-                  <Legend />
-                  <Line type="monotone" dataKey="Healthy Control" stroke="#0f8b8d" strokeWidth={2.4} dot={false} />
-                  <Line type="monotone" dataKey="Parkinson's (PD)" stroke="#d98a21" strokeWidth={2.4} dot={false} />
-                </LineChart>
-              </ResponsiveContainer>
-              <div className="impact-summary">
-                <h3>Threshold Summary</h3>
-                {thresholdRows.map((row) => (
-                  <div className="summary-row" key={row.group}>
-                    <span>{row.group}</span>
-                    <strong>{formatPercent(row.positive_rate)}</strong>
-                    <small>N={row.n}</small>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <section className="panel recent-panel">
-          <div className="section-heading compact">
-            <div>
-              <h2>Recent Predictions</h2>
-              <p>Latest local results from CSV or edited sample rows.</p>
-            </div>
-            <button className="secondary-button">
-              <Download size={16} />
-              Download CSV
-            </button>
-          </div>
-          <div className="table-scroll">
-            <table>
-              <thead>
-                <tr>
-                  <th>Source</th>
-                  <th>Row</th>
-                  <th>PD Probability</th>
-                  <th>Predicted Label</th>
-                  <th>Model</th>
-                </tr>
-              </thead>
-              <tbody>
-                {displayedPredictions.map((row, index) => (
-                  <tr key={`${row.model_key}-${index}`}>
-                    <td>{row.source}</td>
-                    <td>{row.row_index + 1}</td>
-                    <td>{row.probability.toFixed(3)}</td>
-                    <td>{row.predicted_label}</td>
-                    <td>{row.model_key}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+        {renderPage()}
 
         <footer className="disclaimer">
           <Info size={16} />
@@ -503,82 +344,5 @@ function StatusItem({ label, value, icon }: { label: string; value: string; icon
         {value}
       </strong>
     </div>
-  );
-}
-
-function WorkflowStep({
-  number,
-  title,
-  children,
-}: {
-  number: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="workflow-step">
-      <h2>
-        <span>{number}</span>
-        {title}
-      </h2>
-      {children}
-    </div>
-  );
-}
-
-function PerformanceTable({ rows }: { rows: DashboardResponse["comparison"] }) {
-  const classical = rows.filter((row) => row.model_family === "classical");
-  const hybrid = rows.filter((row) => row.model_family === "quantum");
-  const metrics = [
-    ["Accuracy", "mean_accuracy"],
-    ["AUC-ROC", "mean_roc_auc"],
-    ["F1", "mean_f1"],
-  ] as const;
-
-  return (
-    <div className="performance-layout">
-      <div className="performance-table">
-        <h3>Classical Models</h3>
-        <MetricTable rows={classical} metrics={metrics} />
-      </div>
-      <div className="performance-table hybrid">
-        <h3>Hybrid Quantum Models</h3>
-        <MetricTable rows={hybrid} metrics={metrics} />
-      </div>
-    </div>
-  );
-}
-
-function MetricTable({
-  rows,
-  metrics,
-}: {
-  rows: DashboardResponse["comparison"];
-  metrics: readonly (readonly ["Accuracy" | "AUC-ROC" | "F1", "mean_accuracy" | "mean_roc_auc" | "mean_f1"])[];
-}) {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Metric</th>
-          {rows.map((row) => (
-            <th key={row.model_key}>{row.model_name}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {metrics.map(([label, key]) => (
-          <tr key={label}>
-            <th>{label}</th>
-            {rows.map((row) => (
-              <td key={`${row.model_key}-${label}`}>
-                {formatMetric(row[key])}
-                {row.status === "repaired" && <span className="mini-badge">repaired</span>}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
   );
 }

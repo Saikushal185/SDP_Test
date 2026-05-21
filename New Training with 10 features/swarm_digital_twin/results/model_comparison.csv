@@ -1,0 +1,2 @@
+dataset_id,dataset_source,model_name,model_family,feature_mode,mean_accuracy,mean_recall,mean_f1,mean_roc_auc,mean_fit_sample_count,fit_strategy,cv_folds,selected_feature_count,inference_ready
+pd_speech_features_local_top10_mi,pd_speech_features.csv,PSO-SVM,swarm,pso_top10,0.8438771929824561,0.962750626566416,0.9020817340950368,0.8575502077562327,680.4,pso_optimized_full_dataset,10,10,True

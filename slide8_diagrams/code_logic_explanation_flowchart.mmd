@@ -1,0 +1,24 @@
+flowchart TD
+    A["Start"] --> B["Load Parkinson's Speech Dataset"]
+    B --> C["Convert Features to Numeric Format"]
+    C --> D["Handle Missing Values Using Median Imputation"]
+    D --> E["Check Class Distribution"]
+    E --> F["Split Data Using Stratified Sampling"]
+    F --> G["Apply Standard Scaler Normalization"]
+
+    G --> H["Classical ML Path"]
+    H --> I["Train Logistic Regression, SVM, and XGBoost"]
+    I --> J["Evaluate Using Accuracy, Recall, F1-Score, and AUC-ROC"]
+
+    G --> K["Quantum ML Path"]
+    K --> L["Apply PCA for Dimensionality Reduction"]
+    L --> M["Scale Features for Quantum Encoding"]
+    M --> N["Train QSVM and VQC Models"]
+    N --> O["Evaluate Quantum Models"]
+
+    J --> P["Compare Model Performance"]
+    O --> P
+    P --> Q["Select Best Performing Model"]
+    Q --> R["Generate Prediction and Probability Score"]
+    R --> S["Apply Explainable AI for Feature Contribution"]
+    S --> T["Final Output"]

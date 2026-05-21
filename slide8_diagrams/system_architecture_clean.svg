@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#238B9A"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#0B2334" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .bg { fill: #F7FBFD; }
+      .title { font: 700 42px Inter, Arial, sans-serif; fill: #102A43; }
+      .subtitle { font: 400 21px Inter, Arial, sans-serif; fill: #486581; }
+      .lane-title { font: 700 23px Inter, Arial, sans-serif; fill: #102A43; }
+      .card-text { font: 700 18px Inter, Arial, sans-serif; fill: #17324D; text-anchor: middle; dominant-baseline: middle; }
+      .note { font: 500 18px Inter, Arial, sans-serif; fill: #486581; }
+      .lane { stroke: #C0DDE8; stroke-width: 2; rx: 18; }
+      .card { fill: #FFFFFF; stroke: #B8D9E6; stroke-width: 2; rx: 12; filter: url(#shadow); }
+      .arrow { stroke: #238B9A; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+  <text x="58" y="82" class="title">System Architecture</text>
+  <text x="60" y="124" class="subtitle">Clean end-to-end architecture from dataset preparation to saved models, website prediction, and selected-model insights.</text>
+  <rect x="58" y="154" width="1484" height="3" fill="#CDE9EF"/>
+
+  <rect x="60" y="190" width="1480" height="155" class="lane" fill="#EEF9FB"/>
+  <text x="84" y="225" class="lane-title">1. Data and Feature Preparation</text>
+
+  <rect x="105" y="242" width="210" height="70" class="card"/>
+  <rect x="105" y="242" width="7" height="70" rx="12" fill="#2878A8"/>
+  <text x="210" y="268" class="card-text"><tspan x="210">PD Speech</tspan><tspan x="210" dy="23">Dataset</tspan></text>
+
+  <rect x="390" y="232" width="210" height="90" class="card"/>
+  <rect x="390" y="232" width="7" height="90" rx="12" fill="#1D8A99"/>
+  <text x="495" y="253" class="card-text"><tspan x="495">Preprocessing</tspan><tspan x="495" dy="22">remove ID + clean</tspan><tspan x="495" dy="22">numeric features</tspan></text>
+
+  <rect x="675" y="242" width="210" height="70" class="card"/>
+  <rect x="675" y="242" width="7" height="70" rx="12" fill="#6A7FDB"/>
+  <text x="780" y="268" class="card-text"><tspan x="780">Mutual Information</tspan><tspan x="780" dy="23">Ranking</tspan></text>
+
+  <rect x="960" y="242" width="210" height="70" class="card"/>
+  <rect x="960" y="242" width="7" height="70" rx="12" fill="#C7792B"/>
+  <text x="1065" y="268" class="card-text"><tspan x="1065">Final Top 10</tspan><tspan x="1065" dy="23">Feature List</tspan></text>
+
+  <rect x="1245" y="232" width="210" height="90" class="card"/>
+  <rect x="1245" y="232" width="7" height="90" rx="12" fill="#2F855A"/>
+  <text x="1350" y="253" class="card-text"><tspan x="1350">Model Training</tspan><tspan x="1350" dy="22">SVM, XGBoost,</tspan><tspan x="1350" dy="22">PSO-SVM, QSVM, VQC</tspan></text>
+
+  <line x1="315" y1="277" x2="390" y2="277" class="arrow"/>
+  <line x1="600" y1="277" x2="675" y2="277" class="arrow"/>
+  <line x1="885" y1="277" x2="960" y2="277" class="arrow"/>
+  <line x1="1170" y1="277" x2="1245" y2="277" class="arrow"/>
+
+  <rect x="60" y="395" width="1480" height="165" class="lane" fill="#F6FBF2"/>
+  <text x="84" y="430" class="lane-title">2. Validation and Artifact Generation</text>
+
+  <rect x="105" y="452" width="210" height="70" class="card"/>
+  <rect x="105" y="452" width="7" height="70" rx="12" fill="#2F855A"/>
+  <text x="210" y="478" class="card-text"><tspan x="210">10-Fold Stratified</tspan><tspan x="210" dy="23">Cross Validation</tspan></text>
+
+  <rect x="390" y="442" width="210" height="90" class="card"/>
+  <rect x="390" y="442" width="7" height="90" rx="12" fill="#2F855A"/>
+  <text x="495" y="463" class="card-text"><tspan x="495">Evaluation Metrics</tspan><tspan x="495" dy="22">Accuracy, Recall, F1,</tspan><tspan x="495" dy="22">ROC-AUC</tspan></text>
+
+  <rect x="675" y="452" width="210" height="70" class="card"/>
+  <rect x="675" y="452" width="7" height="70" rx="12" fill="#2878A8"/>
+  <text x="780" y="478" class="card-text"><tspan x="780">Saved Models</tspan><tspan x="780" dy="23">.joblib / JSON</tspan></text>
+
+  <rect x="960" y="442" width="210" height="90" class="card"/>
+  <rect x="960" y="442" width="7" height="90" rx="12" fill="#2878A8"/>
+  <text x="1065" y="463" class="card-text"><tspan x="1065">Saved Reports</tspan><tspan x="1065" dy="22">rankings, confusion</tspan><tspan x="1065" dy="22">matrix, comparison</tspan></text>
+
+  <rect x="1245" y="442" width="210" height="90" class="card"/>
+  <rect x="1245" y="442" width="7" height="90" rx="12" fill="#6A7FDB"/>
+  <text x="1350" y="463" class="card-text"><tspan x="1350">Artifact Folder</tspan><tspan x="1350" dy="22">models + processed</tspan><tspan x="1350" dy="22">+ results</tspan></text>
+
+  <line x1="315" y1="487" x2="390" y2="487" class="arrow"/>
+  <line x1="600" y1="487" x2="675" y2="487" class="arrow"/>
+  <line x1="885" y1="487" x2="960" y2="487" class="arrow"/>
+  <line x1="1170" y1="487" x2="1245" y2="487" class="arrow"/>
+
+  <rect x="60" y="620" width="1480" height="165" class="lane" fill="#F2F7FF"/>
+  <text x="84" y="655" class="lane-title">3. Website Prediction and Insights</text>
+
+  <rect x="105" y="677" width="210" height="70" class="card"/>
+  <rect x="105" y="677" width="7" height="70" rx="12" fill="#6A7FDB"/>
+  <text x="210" y="703" class="card-text"><tspan x="210">Load Saved</tspan><tspan x="210" dy="23">Artifacts</tspan></text>
+
+  <rect x="390" y="677" width="210" height="70" class="card"/>
+  <rect x="390" y="677" width="7" height="70" rx="12" fill="#C7792B"/>
+  <text x="495" y="703" class="card-text"><tspan x="495">Manual Input</tspan><tspan x="495" dy="23">10 feature values</tspan></text>
+
+  <rect x="675" y="677" width="210" height="70" class="card"/>
+  <rect x="675" y="677" width="7" height="70" rx="12" fill="#1D8A99"/>
+  <text x="780" y="703" class="card-text"><tspan x="780">Input Validation</tspan><tspan x="780" dy="23">all fields required</tspan></text>
+
+  <rect x="960" y="677" width="210" height="70" class="card"/>
+  <rect x="960" y="677" width="7" height="70" rx="12" fill="#2F855A"/>
+  <text x="1065" y="703" class="card-text"><tspan x="1065">Prediction</tspan><tspan x="1065" dy="23">Healthy / Parkinson's</tspan></text>
+
+  <rect x="1245" y="677" width="210" height="70" class="card"/>
+  <rect x="1245" y="677" width="7" height="70" rx="12" fill="#2878A8"/>
+  <text x="1350" y="703" class="card-text"><tspan x="1350">Model Insights</tspan><tspan x="1350" dy="23">selected-model charts</tspan></text>
+
+  <line x1="315" y1="712" x2="390" y2="712" class="arrow"/>
+  <line x1="600" y1="712" x2="675" y2="712" class="arrow"/>
+  <line x1="885" y1="712" x2="960" y2="712" class="arrow"/>
+  <line x1="1170" y1="712" x2="1245" y2="712" class="arrow"/>
+
+  <text x="80" y="850" class="note">Note: Row 2 stores the trained artifacts. Row 3 loads those artifacts; the website does not retrain the models.</text>
+</svg>

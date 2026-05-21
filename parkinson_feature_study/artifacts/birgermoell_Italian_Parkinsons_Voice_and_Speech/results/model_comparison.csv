@@ -1,0 +1,8 @@
+model_name,model_family,mean_accuracy,mean_recall,mean_f1,mean_roc_auc,mean_fit_sample_count,fit_strategy,cv_folds,inference_ready,dataset_id,dataset_source,fit_sample_count
+RandomForest,classical,0.9857142857142858,1.0,0.9857142857142858,1.0,61.2,full_dataset,10,True,birgermoell_Italian_Parkinsons_Voice_and_Speech,birgermoell/Italian_Parkinsons_Voice_and_Speech,68
+KNN,classical,0.9857142857142858,1.0,0.9857142857142858,0.9875,61.2,full_dataset,10,True,birgermoell_Italian_Parkinsons_Voice_and_Speech,birgermoell/Italian_Parkinsons_Voice_and_Speech,68
+LogisticRegression,classical,0.9714285714285715,1.0,0.9714285714285715,0.975,61.2,full_dataset,10,True,birgermoell_Italian_Parkinsons_Voice_and_Speech,birgermoell/Italian_Parkinsons_Voice_and_Speech,68
+XGBoost,classical,0.9714285714285715,0.9666666666666666,0.9657142857142856,1.0,61.2,full_dataset,10,True,birgermoell_Italian_Parkinsons_Voice_and_Speech,birgermoell/Italian_Parkinsons_Voice_and_Speech,68
+SVM,classical,0.9714285714285715,0.95,0.9523809523809523,0.9916666666666666,61.2,full_dataset,10,True,birgermoell_Italian_Parkinsons_Voice_and_Speech,birgermoell/Italian_Parkinsons_Voice_and_Speech,68
+VQC,quantum,0.5857142857142856,0.5166666666666666,0.43714285714285717,0.7133333333333333,32.0,stratified_subsample,10,False,birgermoell_Italian_Parkinsons_Voice_and_Speech,birgermoell/Italian_Parkinsons_Voice_and_Speech,32
+QSVM,quantum,0.6190476190476191,0.03333333333333333,0.05,0.23666666666666666,32.0,stratified_subsample,10,True,birgermoell_Italian_Parkinsons_Voice_and_Speech,birgermoell/Italian_Parkinsons_Voice_and_Speech,32

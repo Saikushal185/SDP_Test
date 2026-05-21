@@ -1,0 +1,2 @@
+dataset_id,dataset_source,source_type,n_samples,n_features,class_0_count,class_1_count,requested_cv_folds,effective_cv_folds,best_classical_model,best_quantum_model,website_candidate_model
+kongkon123890_uci_parkinsons_voice,XANJEEV/Parkinson_Classification_Dataset,huggingface_audio,330,88,165,165,10,10,XGBoost,QSVM,XGBoost

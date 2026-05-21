@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M1,1 L10,5 L1,9" fill="none" stroke="#6B7280" stroke-width="2"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#0B2334" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .bg { fill: #F7FBFD; }
+      .title { font: 700 42px Inter, Arial, sans-serif; fill: #102A43; }
+      .subtitle { font: 400 21px Inter, Arial, sans-serif; fill: #486581; }
+      .system { fill: #EEF9FB; stroke: #B8D9E6; stroke-width: 2; rx: 24; }
+      .system-title { font: 700 25px Inter, Arial, sans-serif; fill: #102A43; }
+      .actor { stroke: #2878A8; stroke-width: 4; fill: none; stroke-linecap: round; }
+      .actor-label { font: 700 21px Inter, Arial, sans-serif; fill: #17324D; text-anchor: middle; }
+      .uc { fill: #FFFFFF; stroke: #9CCFE2; stroke-width: 2; filter: url(#shadow); }
+      .uc-main { fill: #FFFFFF; stroke: #238B9A; stroke-width: 2.4; filter: url(#shadow); }
+      .uc-internal { fill: #F8FAFC; stroke: #B8D9E6; stroke-width: 2; filter: url(#shadow); }
+      .uc-text { font: 700 18px Inter, Arial, sans-serif; fill: #17324D; text-anchor: middle; dominant-baseline: middle; }
+      .assoc { stroke: #238B9A; stroke-width: 3; fill: none; }
+      .include { stroke: #6B7280; stroke-width: 2.5; stroke-dasharray: 8 7; fill: none; marker-end: url(#openArrow); }
+      .note { font: 500 18px Inter, Arial, sans-serif; fill: #486581; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+  <text x="58" y="82" class="title">Use Case Diagram</text>
+  <text x="60" y="124" class="subtitle">Corrected UML use case view for the Top-10 Feature PD Speech Model Lab website.</text>
+  <rect x="58" y="154" width="1484" height="3" fill="#CDE9EF"/>
+
+  <!-- Actor -->
+  <circle cx="165" cy="355" r="36" class="actor"/>
+  <line x1="165" y1="391" x2="165" y2="525" class="actor"/>
+  <line x1="98" y1="450" x2="232" y2="450" class="actor"/>
+  <line x1="165" y1="525" x2="108" y2="625" class="actor"/>
+  <line x1="165" y1="525" x2="222" y2="625" class="actor"/>
+  <text x="165" y="665" class="actor-label">User / Student</text>
+
+  <!-- System boundary -->
+  <rect x="330" y="200" width="1080" height="585" class="system"/>
+  <text x="370" y="248" class="system-title">PD Speech Model Lab Website</text>
+
+  <!-- Primary use cases -->
+  <ellipse cx="540" cy="335" rx="145" ry="50" class="uc-main"/>
+  <text x="540" y="324" class="uc-text"><tspan x="540">Enter Top-10</tspan><tspan x="540" dy="23">Feature Values</tspan></text>
+
+  <ellipse cx="540" cy="475" rx="145" ry="50" class="uc-main"/>
+  <text x="540" y="464" class="uc-text"><tspan x="540">Select Prediction</tspan><tspan x="540" dy="23">Model</tspan></text>
+
+  <ellipse cx="540" cy="615" rx="145" ry="50" class="uc-main"/>
+  <text x="540" y="604" class="uc-text"><tspan x="540">Request</tspan><tspan x="540" dy="23">Prediction</tspan></text>
+
+  <ellipse cx="540" cy="725" rx="145" ry="42" class="uc-main"/>
+  <text x="540" y="725" class="uc-text">View Prediction Result</text>
+
+  <ellipse cx="930" cy="335" rx="145" ry="50" class="uc-main"/>
+  <text x="930" y="324" class="uc-text"><tspan x="930">View Model</tspan><tspan x="930" dy="23">Insights</tspan></text>
+
+  <!-- Included/internal use cases -->
+  <ellipse cx="1125" cy="475" rx="150" ry="48" class="uc-internal"/>
+  <text x="1125" y="464" class="uc-text"><tspan x="1125">Validate All</tspan><tspan x="1125" dy="23">10 Inputs</tspan></text>
+
+  <ellipse cx="1125" cy="590" rx="150" ry="48" class="uc-internal"/>
+  <text x="1125" y="579" class="uc-text"><tspan x="1125">Load Selected</tspan><tspan x="1125" dy="23">Saved Model</tspan></text>
+
+  <ellipse cx="1125" cy="705" rx="150" ry="48" class="uc-internal"/>
+  <text x="1125" y="694" class="uc-text"><tspan x="1125">Display Metrics,</tspan><tspan x="1125" dy="23">Charts and Matrix</tspan></text>
+
+  <!-- Actor associations: straight and non-crossing -->
+  <line x1="232" y1="450" x2="395" y2="335" class="assoc"/>
+  <line x1="232" y1="450" x2="395" y2="475" class="assoc"/>
+  <line x1="232" y1="450" x2="395" y2="615" class="assoc"/>
+  <line x1="232" y1="450" x2="395" y2="725" class="assoc"/>
+  <line x1="232" y1="450" x2="785" y2="335" class="assoc"/>
+
+  <!-- Include relationships: arrow points to the included use case -->
+  <line x1="678" y1="600" x2="980" y2="485" class="include"/>
+  
+
+  <line x1="680" y1="625" x2="980" y2="590" class="include"/>
+  
+
+  <line x1="995" y1="365" x2="1080" y2="660" class="include"/>
+  
+
+  <line x1="640" y1="705" x2="985" y2="615" class="include"/>
+  
+
+  <text x="80" y="845" class="note">Primary actions are shown on the left side of the system. Internal required steps are shown on the right and connected using UML-style include arrows.</text>
+</svg>

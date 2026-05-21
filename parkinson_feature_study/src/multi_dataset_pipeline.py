@@ -78,6 +78,7 @@ class QuantumClassifierBundle:
         max_qubits: int = 6,
         vqc_maxiter: int = 25,
         qsvm_num_steps: int = 100,
+        use_pca: bool = True,
     ) -> None:
         self.model_name = model_name
         self.random_seed = random_seed
@@ -85,6 +86,7 @@ class QuantumClassifierBundle:
         self.max_qubits = max_qubits
         self.vqc_maxiter = vqc_maxiter
         self.qsvm_num_steps = qsvm_num_steps
+        self.use_pca = use_pca
         self.imputer = SimpleImputer(strategy="median")
         self.scaler = StandardScaler()
         self.minmax_scaler = MinMaxScaler(feature_range=(0.0, np.pi))
@@ -114,6 +116,16 @@ class QuantumClassifierBundle:
         if fit:
             X_imputed = self.imputer.fit_transform(X_array)
             X_scaled = self.scaler.fit_transform(X_imputed)
+            if not self.use_pca:
+                if X_scaled.shape[1] > self.max_qubits:
+                    raise ValueError(
+                        f"Direct quantum feature mode received {X_scaled.shape[1]} features, "
+                        f"but max_qubits is {self.max_qubits}."
+                    )
+                self.pca = None
+                self.n_components_ = X_scaled.shape[1]
+                return self.minmax_scaler.fit_transform(X_scaled)
+
             full_pca = PCA(random_state=self.random_seed)
             full_pca.fit(X_scaled)
             cumulative = np.cumsum(full_pca.explained_variance_ratio_)
@@ -126,6 +138,9 @@ class QuantumClassifierBundle:
 
         X_imputed = self.imputer.transform(X_array)
         X_scaled = self.scaler.transform(X_imputed)
+        if not self.use_pca:
+            return self.minmax_scaler.transform(X_scaled)
+
         X_reduced = self.pca.transform(X_scaled)
         return self.minmax_scaler.transform(X_reduced)
 
@@ -187,6 +202,7 @@ class QuantumClassifierBundle:
             "max_qubits": self.max_qubits,
             "vqc_maxiter": self.vqc_maxiter,
             "qsvm_num_steps": self.qsvm_num_steps,
+            "use_pca": self.use_pca,
             "n_components": self.n_components_,
             "preprocessing": {
                 "imputer_statistics": self._serialize_optional_array(getattr(self.imputer, "statistics_", None)),

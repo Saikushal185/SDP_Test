@@ -1,0 +1,8 @@
+model_name,model_family,mean_accuracy,mean_recall,mean_f1,mean_roc_auc,mean_fit_sample_count,fit_strategy,cv_folds,inference_ready,dataset_id,dataset_source,fit_sample_count
+XGBoost,classical,0.8892857142857142,0.8416666666666666,0.8471428571428572,0.9666666666666666,66.6,full_dataset,10,True,Hahad14_Parkinsons_Disease_Speech,Hahad14/Parkinsons_Disease_Speech,74
+RandomForest,classical,0.7553571428571428,0.55,0.6466666666666666,0.8364583333333332,66.6,full_dataset,10,True,Hahad14_Parkinsons_Disease_Speech,Hahad14/Parkinsons_Disease_Speech,74
+LogisticRegression,classical,0.6910714285714286,0.4999999999999999,0.5833333333333333,0.7,66.6,full_dataset,10,True,Hahad14_Parkinsons_Disease_Speech,Hahad14/Parkinsons_Disease_Speech,74
+VQC,quantum,0.5053571428571428,0.5166666666666666,0.47833333333333333,0.5379166666666667,32.0,stratified_subsample,10,False,Hahad14_Parkinsons_Disease_Speech,Hahad14/Parkinsons_Disease_Speech,32
+SVM,classical,0.6482142857142857,0.3416666666666667,0.4366666666666667,0.6970833333333333,66.6,full_dataset,10,True,Hahad14_Parkinsons_Disease_Speech,Hahad14/Parkinsons_Disease_Speech,74
+KNN,classical,0.6321428571428571,0.3,0.3938095238095238,0.5572916666666667,66.6,full_dataset,10,True,Hahad14_Parkinsons_Disease_Speech,Hahad14/Parkinsons_Disease_Speech,74
+QSVM,quantum,0.5285714285714286,0.26666666666666666,0.17168831168831167,0.3258333333333333,32.0,stratified_subsample,10,True,Hahad14_Parkinsons_Disease_Speech,Hahad14/Parkinsons_Disease_Speech,32

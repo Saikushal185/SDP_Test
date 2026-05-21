@@ -1,0 +1,3 @@
+model_name,artifact_path,feature_schema_path,selected_feature_count,missing_value_strategy,inference_ready
+LogisticRegression,C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\New Training with 10 features\notebook_models\logisticregression.joblib,C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\New Training with 10 features\processed\feature_schema_from_notebook.csv,10,SimpleImputer(strategy='median') inside Pipeline,True
+SVM,C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\New Training with 10 features\notebook_models\svm.joblib,C:\Users\saiku\OneDrive\Desktop\Projects\SDP_Test\New Training with 10 features\processed\feature_schema_from_notebook.csv,10,SimpleImputer(strategy='median') inside Pipeline,True

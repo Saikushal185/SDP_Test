@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Literature Survey</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        width: 1600px;
+        height: 1000px;
+        background: #f8f5ef;
+        color: #222;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .slide {
+        padding: 28px 46px 26px;
+      }
+
+      h1 {
+        margin: 0 0 20px;
+        color: #1f4e79;
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-decoration: underline;
+        text-underline-offset: 9px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        background: #f8f5ef;
+        border: 2px solid #b98267;
+      }
+
+      th,
+      td {
+        border: 2px solid #b98267;
+        padding: 12px 8px;
+        vertical-align: middle;
+        line-height: 1.18;
+        font-size: 17px;
+      }
+
+      th {
+        background: #eee2d8;
+        text-align: left;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      td:first-child,
+      th:first-child,
+      td:nth-child(3),
+      th:nth-child(3) {
+        text-align: center;
+      }
+
+      .paper {
+        font-size: 16px;
+      }
+
+      .paper strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .footer {
+        margin-top: 18px;
+        color: #666;
+        font-size: 16px;
+      }
+
+      col.sno {
+        width: 5%;
+      }
+
+      col.title {
+        width: 25%;
+      }
+
+      col.year {
+        width: 5%;
+      }
+
+      col.pub {
+        width: 15%;
+      }
+
+      col.method {
+        width: 21%;
+      }
+
+      col.adv {
+        width: 14%;
+      }
+
+      col.disadv {
+        width: 15%;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="slide">
+      <h1>Literature Survey</h1>
+      <table>
+        <colgroup>
+          <col class="sno" />
+          <col class="title" />
+          <col class="year" />
+          <col class="pub" />
+          <col class="method" />
+          <col class="adv" />
+          <col class="disadv" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Paper Title</th>
+            <th>Year</th>
+            <th>Published In</th>
+            <th>Proposed Methodology</th>
+            <th>Advantage</th>
+            <th>Disadvantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="paper">
+              <strong>Machine Learning-Based Classification of Parkinson's Disease Patients Using Speech Biomarkers</strong>
+              Author: Hossain &amp; Amenta
+            </td>
+            <td>2024</td>
+            <td>Journal of Parkinson's Disease</td>
+            <td>Used supervised ML pipelines on speech biomarkers with 756 samples and 754 acoustic features.</td>
+            <td>Shows that ML pipelines can classify PD using speech biomarkers.</td>
+            <td>Uses high-dimensional features and limited model diversity; no quantum or swarm model comparison.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="paper">
+              <strong>A Study on Voice Measures in Patients with Parkinson's Disease</strong>
+              Author: Xiu et al.
+            </td>
+            <td>2024</td>
+            <td>Journal of Voice</td>
+            <td>Analyzed jitter, shimmer, HNR, formants, and trained SVM classifiers using selected voice measures.</td>
+            <td>Uses clinically understandable acoustic voice measures for low-cost screening.</td>
+            <td>Small dataset of 30 PD and 30 healthy speakers; limited model comparison.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="paper">
+              <strong>Machine Learning-Assisted Speech Analysis for Early Detection of Parkinson's Disease</strong>
+              Author: Di Cesare et al.
+            </td>
+            <td>2024</td>
+            <td>Sensors</td>
+            <td>Studied speech analysis using speaker diarization and classification techniques for early PD detection.</td>
+            <td>Highlights speech as a non-invasive and accessible biomarker.</td>
+            <td>Performance depends on recording quality, noise conditions, and sufficient data collection.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="paper">
+              <strong>Machine Learning-Based Classification Using Acoustic Features: Insights from Multilingual Speech Tasks</strong>
+              Author: Jeong et al.
+            </td>
+            <td>2024</td>
+            <td>Computers in Biology and Medicine</td>
+            <td>Used eGeMAPSv2 acoustic features and a voting-based ML model on Korean PD speech data.</td>
+            <td>Achieved 84.73% accuracy and 92.18% AUC with limited training data.</td>
+            <td>Focused mainly on one speech cohort; no quantum, swarm, or interactive explainability dashboard.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td class="paper">
+              <strong>Transformer-Based Transfer Learning on Self-Reported Voice Recordings for Parkinson's Diagnosis</strong>
+              Author: Tougui et al.
+            </td>
+            <td>2024</td>
+            <td>Scientific Reports</td>
+            <td>Used CNN and Transformer-based transfer learning on smartphone self-reported voice recordings.</td>
+            <td>Strong deep learning performance using transfer learning on real-world voice data.</td>
+            <td>Requires large data and high computation; interpretability is lower than structured SHAP explanations.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footer">Speech-Based Parkinson Disease Analysis | Literature Survey</div>
+    </main>
+  </body>
+</html>
